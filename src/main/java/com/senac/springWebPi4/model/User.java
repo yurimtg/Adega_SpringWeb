@@ -21,8 +21,9 @@ import lombok.Setter;
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
+    private long id;    
     private String nome;
-    private String nomeUser;
+    private String email;
+    private String senha;
+    private String tipoUsuario; // Admin, estoquista e Cliente. 
 }
