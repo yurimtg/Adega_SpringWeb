@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Sistema de Gestão de Pessoas</title>
+
+</head>
+<body>
+	<header th:insert="fragments/geral.html :: header"> </header>
+        
+        <h1>hahhsas</h1>
+        
+	<div class="container my-2">
+		<table border="1" class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nome</th>
+					<th>USer Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${list.content}">
+					<td th:text="${user.id}"></td>
+					<td th:text="${user.nome}"></td>
+					<td th:text="${user.nomeUser}"></td>
+					<td>
+						<a th:href="@{/rh/pessoas/{id}(id=${user.id})}" class="btn btn-primary">Alterar</a>
+						<a th:href="@{/rh/pessoas/excluir/{id}(id=${user.id})}" class="btn btn-danger">Excluir</a>			
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
