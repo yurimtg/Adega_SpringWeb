@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.senac.springWebPi4.repository.UserRepository;
 import java.util.Optional;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 @RestController
 @RequestMapping("/user")
+@Controller
 
 public class UserController {
 
@@ -44,5 +47,10 @@ public class UserController {
     @GetMapping("/ListName/{nome}")
     public List<User> findByName(@PathVariable("nome") String nome) {
         return this.userRepository.findByNomeIgnoreCase(nome);
+    }
+    @GetMapping("/")
+    public String listWeb(Model model) {
+        model.addAttribute("list", userRepository.findAll());
+        return "userlist";
     }
 }
