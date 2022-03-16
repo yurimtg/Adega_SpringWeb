@@ -2,15 +2,17 @@ package com.senac.springWebPi4.controller;
 
 import com.senac.springWebPi4.Utils.UtilsTipoUsuario;
 import com.senac.springWebPi4.model.User;
-import com.senac.springWebPi4.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.senac.springWebPi4.repository.UserRepository;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("user")
@@ -19,12 +21,6 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @GetMapping("/home")
-    public ModelAndView getHome() {
-        ModelAndView mv = new ModelAndView("home");
-        return mv;
-    }
 
     @GetMapping("/{id}")
     public Optional<User> user(@PathVariable("id") Long id) {
@@ -41,9 +37,10 @@ public class UserController {
         return this.userRepository.findByIdGreaterThan(id);
     }
 
-    public User findByUserName(String username){
-        return this.userRepository.findByUserName(username);
-    }
+//    @GetMapping("/ListName/{username}")
+//    public List<User> findByName(@PathVariable("username") String username) {
+//        return this.userRepository.findByNomeIgnoreCase(username);
+//    }
 
     @GetMapping("/list")
     public ModelAndView userList() {

@@ -15,9 +15,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByIdGreaterThan(Long id);
 
-    List<User> findByNomeIgnoreCase(String id);
+//    List<User> findByNomeIgnoreCase(String id);
 
-    @Query("select u from User u where u.username like :username")
-    User findByUserName(@Param("username") String username);
+//    @Query("select u from User u where u.username like :username")
+//    User findByUserName(@Param("username") String username);
 
 }
