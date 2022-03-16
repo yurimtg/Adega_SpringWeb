@@ -31,4 +31,11 @@ public class User{
     private String senha;
     private String tipoUsuario; // Admin, estoquista
     private String data; 
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", nome=" + nome + ", email=" + email + ", telefone=" + telefone + ", senha=" + senha + ", tipoUsuario=" + tipoUsuario + ", data=" + data + '}';
+    }
+    
+    
 }

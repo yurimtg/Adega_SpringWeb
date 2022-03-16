@@ -7,39 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.senac.springWebPi4.repository.UserRepository;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-@RequestMapping("user")
+//@RequestMapping("user")
 
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/{id}")
-    public Optional<User> user(@PathVariable("id") Long id) {
-        return this.userRepository.findById(id);
-    }
-
-    @PostMapping("/")
-    public User user(@RequestBody User user) {
-        return this.userRepository.save(user);
-    }
-
-    @GetMapping("/list/{id}")
-    public List<User> listMoreThan(@PathVariable("id") Long id) {
-        return this.userRepository.findByIdGreaterThan(id);
-    }
-
-    @GetMapping("/ListName/{nome}")
-    public List<User> findByName(@PathVariable("nome") String nome) {
-        return this.userRepository.findByNomeIgnoreCase(nome);
+    @PostMapping("/create")
+    public RedirectView createUser(User user) {
+        userRepository.save(user);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/list");
+        return redirectView;
     }
 
     @GetMapping("/list")
@@ -54,6 +43,68 @@ public class UserController {
     public ModelAndView userForm() {
         ModelAndView mv = new ModelAndView("userForm");
         mv.addObject("tipoUser", UtilsTipoUsuario.values());
+        return mv;
+    }
+
+    @GetMapping("/userEdit/{id}")
+    public ModelAndView userEdit(@PathVariable("id") Long id, User usuario) {
+        Optional<User> optional = this.userRepository.findById(id);
+
+        if (optional.isPresent()) {
+            User user = optional.get();
+            ModelAndView mv = new ModelAndView("userEdit");
+
+            mv.addObject("user", user);
+            mv.addObject("tipoUser", UtilsTipoUsuario.values());
+            System.out.println(user.getId());
+            return mv;
+        } else {
+            return new ModelAndView("redrect:/list");
+        }
+    }
+
+    @PostMapping("/editUser/{id}")
+    public RedirectView editUser(@PathVariable long id, User user) {
+
+        Optional<User> optional = this.userRepository.findById(id);
+
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/list");
+        if (optional.isPresent()) {
+            user.setSenha(optional.get().getSenha());
+            this.userRepository.save(user);
+
+            return redirectView;
+        } else {
+            return redirectView;
+        }
+    }
+
+    @GetMapping("/deleteUser/{id}")
+    public RedirectView deleteUser(@PathVariable Long id) {
+
+        this.userRepository.deleteById(id);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/list");
+        return redirectView;
+    }
+
+    @GetMapping("/home")
+    public ModelAndView homePage() {
+        ModelAndView mv = new ModelAndView("home");
+        return mv;
+    }
+
+    @PostMapping("/findByName")
+    public ModelAndView findByName(@RequestParam("nomepesquisa") String nomepesquisa) {
+        List<User> user = null;
+        if (nomepesquisa.equals("")) {
+            user = this.userRepository.findAll();
+        } else {
+            user = this.userRepository.findByName(nomepesquisa);
+        }
+        ModelAndView mv = new ModelAndView("userlist");
+        mv.addObject("list", user);
         return mv;
     }
 }
