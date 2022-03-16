@@ -1,6 +1,9 @@
-<html>
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{base :: head}"></head>
+<head th:replace="~{fragment :: head('Home')}"></head>
 <body>
 <div th:replace="~{base :: logo}"></div>
+<header th:replace="~{fragment :: header}"></header>
 </body>
 </html>
