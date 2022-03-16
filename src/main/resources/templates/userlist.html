@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
+    <script>
+        function deletar(evt) {
+           if(confirm("Deseja deletar Usuario?")){
+               
+           }else{
+                evt.preventDefault();
+           }
+        }
+    </script>
     <head th:replace="~{fragment :: head('user List')}"></head>
 
     <body>
@@ -31,11 +39,11 @@
                             <td th:text="${lista.email}"></td>
                             <td th:text="${lista.telefone}"></td>
                             <td th:text="${lista.tipoUsuario}"></td>
-                            <td><a th:href="@{deleteUser/{userId}(userId = ${lista.id})}">Deletar</a></td>
+                            <td><a onclick="deletar(event)" th:href="@{deleteUser/{userId}(userId = ${lista.id})}">Deletar</a></td>
                             <td><a th:href="@{userEdit/{userId}(userId = ${lista.id})}">Alterar</a></td>
                         </tr>
                     </tbody>
-                </table>
+                </table>    
             </main>
         </section>
     </body>
