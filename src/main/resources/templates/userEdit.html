@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{base :: head}"></head>
-<head th:replace="~{fragment :: head('user Form')}"></head>
+<head th:replace="~{fragment :: head('User Edit')}"></head>
 <body>
 <section class="container">
     <div th:replace="~{base :: logo}"></div>
     <header th:replace="~{fragment :: header}"></header>
     <main>
-        <form action="/create" method="post">
+        <form th:object="${user}" th:action="@{/editUser/{userId}(userId = ${user.id})}" method="post">
             <div class="row">
                 <div class="col-md-5 mb-3">
                     <label>Nome</label>
-                    <input type="text"  name="nome" class="form-control" placeholder="Nome" required>
+                    <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome" required>
                 </div>
                 <div class="col-md-5 mb-3">
                     <label>E-mail</label>
@@ -19,18 +19,18 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">@</span>
                         </div>
-                        <input type="email" class="form-control" name="email" placeholder="E-mail" aria-describedby="inputGroupPrepend2" required>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="E-mail" aria-describedby="inputGroupPrepend2" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <label>Telefone</label>
-                    <input type="tel" name="telefone" pattern="[0-9]{2}[0-9]{5}-[0-9]{4}" class="form-control" placeholder="1198888-7777" required>
+                    <input type="tel" th:field="*{telefone}" pattern="[0-9]{2}[0-9]{5}-[0-9]{4}" class="form-control" placeholder="1198888-7777" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label>Data Nascimento</label>
-                    <input type="date" name="data" class="form-control" placeholder="Data Nascimento" required>
+                    <input type="date" th:field="*{data}" class="form-control" placeholder="Data Nascimento" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label>Cargo</label>
@@ -39,14 +39,10 @@
                                 th:value="${tipo}"th:text="${tipo}"></option>
                     </select>
                 </div>
-                <div class="col-md-5 mb-3">
-                    <label for="validationDefault05">Senha</label>
-                    <input type="password" name="senha" class="form-control" id="validationDefault05" placeholder="senha" required>
-                </div>
             </div>
-            <button class="btn btn-primary" type="submit">Cadastrar</button>
+            <button class="btn btn-primary" type="submit">Atualizar</button>
         </form>
     </main>
-</<select>
+</section>
 </body>
 </html>
