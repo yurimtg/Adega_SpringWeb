@@ -1,22 +1,19 @@
 package com.senac.springWebPi4.controller;
 
 import com.senac.springWebPi4.Utils.UtilsTipoUsuario;
+import com.senac.springWebPi4.model.TipoUsuario;
 import com.senac.springWebPi4.model.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.senac.springWebPi4.repository.UserRepository;
 import java.util.Optional;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-//@RequestMapping("user")
+@RequestMapping("user")
 
 public class UserController {
 
@@ -42,7 +39,6 @@ public class UserController {
     @GetMapping("/form")
     public ModelAndView userForm() {
         ModelAndView mv = new ModelAndView("userForm");
-        mv.addObject("tipoUser", UtilsTipoUsuario.values());
         return mv;
     }
 
@@ -71,7 +67,7 @@ public class UserController {
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl("/list");
         if (optional.isPresent()) {
-            user.setSenha(optional.get().getSenha());
+            user.setPassword(optional.get().getPassword());
             this.userRepository.save(user);
 
             return redirectView;
@@ -95,16 +91,16 @@ public class UserController {
         return mv;
     }
 
-    @PostMapping("/findByName")
-    public ModelAndView findByName(@RequestParam("nomepesquisa") String nomepesquisa) {
-        List<User> user = null;
-        if (nomepesquisa.equals("")) {
-            user = this.userRepository.findAll();
-        } else {
-            user = this.userRepository.findByName(nomepesquisa);
-        }
-        ModelAndView mv = new ModelAndView("userlist");
-        mv.addObject("list", user);
-        return mv;
-    }
+//    @PostMapping("/findByName")
+//    public ModelAndView findByName(@RequestParam("nomepesquisa") String nomepesquisa) {
+//        List<User> user = null;
+//        if (nomepesquisa.equals("")) {
+//            user = this.userRepository.findAll();
+//        } else {
+//            user = this.userRepository.findByName(nomepesquisa);
+//        }
+//        ModelAndView mv = new ModelAndView("userlist");
+//        mv.addObject("list", user);
+//        return mv;
+//    }
 }

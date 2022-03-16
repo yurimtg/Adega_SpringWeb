@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragment :: head('Home')}"></head>
-    <body>
-        <section class="container">
-        <header th:replace="~{fragment :: header}"></header> 
-        <mian>           
-            <h1>HomePage</h1>
-        </mian>
-        
-        </section>
-    </body>
+<head th:replace="~{base :: head}"></head>
+<head th:replace="~{fragment :: head('Home')}"></head>
+<body>
+<div th:replace="~{base :: logo}"></div>
+<header th:replace="~{fragment :: header}"></header>
+</body>
 </html>

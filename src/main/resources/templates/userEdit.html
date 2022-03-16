@@ -1,46 +1,48 @@
 <!doctype html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragment :: head('User Edit')}"></head>
-    <body>
-        <section class="container">
-            <header th:replace="~{fragment :: header}"></header> 
-            <main>
-                <form th:object="${user}" th:action="@{/editUser/{userId}(userId = ${user.id})}" method="post">
-                    <div class="row">
-                        <div class="col-md-5 mb-3">
-                            <label>Nome</label>
-                            <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome" required>
+<head th:replace="~{base :: head}"></head>
+<head th:replace="~{fragment :: head('User Edit')}"></head>
+<body>
+<section class="container">
+    <div th:replace="~{base :: logo}"></div>
+    <header th:replace="~{fragment :: header}"></header>
+    <main>
+        <form th:object="${user}" th:action="@{/editUser/{userId}(userId = ${user.id})}" method="post">
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                    <label>Nome</label>
+                    <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome" required>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label>E-mail</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
                         </div>
-                        <div class="col-md-5 mb-3">
-                            <label>E-mail</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">@</span>
-                                </div>
-                                <input type="email" class="form-control" th:field="*{email}" placeholder="E-mail" aria-describedby="inputGroupPrepend2" required>
-                            </div>
-                        </div>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="E-mail" aria-describedby="inputGroupPrepend2" required>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label>Telefone</label>
-                            <input type="tel" th:field="*{telefone}" pattern="[0-9]{2}[0-9]{5}-[0-9]{4}" class="form-control" placeholder="1198888-7777" required>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label>Data Nascimento</label>
-                            <input type="date" th:field="*{data}" class="form-control" placeholder="Data Nascimento" required>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label>Cargo</label>
-                            <select class="form-control" name="tipoUsuario">
-                                <option th:each="tipo: ${tipoUser}"
-                                        th:value="${tipo}"th:text="${tipo}"></option>
-                            </select>
-                        </div>                 
-                    </div>
-                    <button class="btn btn-primary" type="submit">Atualizar</button>
-                </form>
-            </main>
-        </section>
-    </body>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>Telefone</label>
+                    <input type="tel" th:field="*{telefone}" pattern="[0-9]{2}[0-9]{5}-[0-9]{4}" class="form-control" placeholder="1198888-7777" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label>Data Nascimento</label>
+                    <input type="date" th:field="*{data}" class="form-control" placeholder="Data Nascimento" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label>Cargo</label>
+                    <select class="form-control" name="tipoUsuario">
+                        <option th:each="tipo: ${tipoUser}"
+                                th:value="${tipo}"th:text="${tipo}"></option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Atualizar</button>
+        </form>
+    </main>
+</section>
+</body>
 </html>
