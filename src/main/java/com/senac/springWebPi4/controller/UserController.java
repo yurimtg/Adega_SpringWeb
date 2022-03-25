@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/create")
+    @PostMapping("/criarUsuario")
     public RedirectView createUser(User user) {
         userRepository.save(user);
         RedirectView redirectView = new RedirectView();

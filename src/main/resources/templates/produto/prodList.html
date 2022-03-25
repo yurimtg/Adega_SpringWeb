@@ -1,21 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <script>
-        function deletar(evt) {
-           if(confirm("Deseja deletar Usuario?")){
-               
-           }else{
-                evt.preventDefault();
-           }
-        }
-    </script>
     <head th:replace="~{fragment :: head('user List')}"></head>
 
     <body>
         <section class="container">
             <header th:replace="~{fragment :: header}"></header> 
             <main>
-                <form action="/findByName" method="post"  class="d-flex  mt-4 col-md-5">
+                <form action="../produto/findByName" method="post"  class="d-flex  mt-4 col-md-5">
                     <input name="nomepesquisa" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
@@ -24,26 +15,33 @@
                     <thead>
                         <tr>
                             <td>Id</td>
-                            <td>Nome</td>
-                            <td>Data Nascimento</td>
-                            <td>Email</td>
-                            <td>Telefone</td>                   
-                            <td>Tipo</td>
+                            <td>Produto</td>
+                            <td>Qtd</td>
+                            <td>Status</td>                   
+                            <td>Descrição</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each = "lista:${list}">
                             <td th:text="${lista.id}"></td>
-                            <td th:text="${lista.nome}"></td>
-                            <td th:text="${lista.data}"></td>
-                            <td th:text="${lista.email}"></td>
-                            <td th:text="${lista.telefone}"></td>
-                            <td th:text="${lista.tipoUsuario}"></td>
+                            <td th:text="${lista.nomeProduto}"></td>
+                            <td th:text="${lista.qtd}"></td>
                             <td th:text="${lista.status}"></td>
-                            <td><a th:href="@{userEdit/{userId}(userId = ${lista.id})}">Alterar</a></td>
+                            <td th:text="${lista.descricao}"></td>
+                            <td><a th:href="@{detalheProduto/{prodId}(pordId = ${lista.id})}">Detalhe</a></td>
+                            <td><a th:href="@{prodEdit/{prodId}(pordId = ${lista.id})}">Alterar</a></td>
                         </tr>
                     </tbody>
-                </table>    
+                </table>  
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
             </main>
         </section>
     </body>

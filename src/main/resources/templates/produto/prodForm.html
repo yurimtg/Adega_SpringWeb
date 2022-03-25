@@ -1,41 +1,27 @@
 <!doctype html>
 <html lang="en">
-    <head th:replace="~{fragment :: head('user Form')}"></head>
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
     <body>
         <section class="container">
             <header th:replace="~{fragment :: header}"></header> 
             <main>
-                <form action="/create" method="post">
+                <form action="/criarProduto" method="post">
                     <div class="row">
                         <div class="col-md-5 mb-3">
-                            <label>Nome</label>
-                            <input type="text"  name="nome" class="form-control" placeholder="Nome" required>
+                            <label>Nome Produto</label>
+                            <input type="text"  name="nomeProduto" class="form-control" placeholder="Nome Produto" required>
                         </div>
                         <div class="col-md-5 mb-3">
-                            <label>E-mail</label>
+                            <label>Descrição</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">@</span>
-                                </div>
-                                <input type="email" class="form-control" name="email" placeholder="E-mail" aria-describedby="inputGroupPrepend2" required>
+                                <input type="text" class="form-control" name="descricao" placeholder="Descrição" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label>Telefone</label>
-                            <input type="tel" name="telefone" pattern="[0-9]{2}[0-9]{5}[0-9]{4}" class="form-control" placeholder="11988887777" required>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label>Data Nascimento</label>
-                            <input type="date" name="data" class="form-control" placeholder="Data Nascimento" required>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label>Cargo</label>
-                            <select class="form-control" name="tipoUsuario">
-                                <option th:each="tipo: ${tipoUser}"
-                                        th:value="${tipo}"th:text="${tipo}"></option>
-                            </select>
+                            <label>Quantidade</label>
+                            <input type="number" name="qtd" class="form-control" placeholder="Quantidade" required>
                         </div>
                         <div class="col-md-3 mb-3">
                             <label>Status</label>
@@ -43,11 +29,7 @@
                                 <option th:each="status: ${status}"
                                         th:value="${status}"th:text="${status}"></option>
                             </select>
-                        </div>
-                        <div class="col-md-5 mb-3">
-                            <label for="validationDefault05">Senha</label>
-                            <input type="password" name="senha" class="form-control" id="validationDefault05" placeholder="senha" required>
-                        </div>
+                        </div>                       
                     </div>
                     <button class="btn btn-primary" type="submit">Cadastrar</button>
                 </form>
