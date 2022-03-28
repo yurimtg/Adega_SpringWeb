@@ -8,7 +8,7 @@
             <main>
                 <form action="../produto/findByName" method="post"  class="d-flex  mt-4 col-md-5">
                     <input name="nomepesquisa" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        <button class="btn btn-dark" type="submit">Search</button>
                 </form>
 
                 <table class="table  mt-4">
@@ -16,6 +16,7 @@
                         <tr>
                             <td>Id</td>
                             <td>Produto</td>
+                            <td>Categoria</td>
                             <td>Qtd</td>
                             <td>Status</td>                   
                             <td>Descrição</td>
@@ -25,6 +26,7 @@
                         <tr th:each = "lista:${list}">
                             <td th:text="${lista.id}"></td>
                             <td th:text="${lista.nomeProduto}"></td>
+                            <td th:text ="${lista.categoria} "></td>
                             <td th:text="${lista.qtd}"></td>
                             <td th:text="${lista.status}"></td>
                             <td th:text="${lista.descricao}"></td>

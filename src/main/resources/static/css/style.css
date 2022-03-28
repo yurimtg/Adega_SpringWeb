@@ -22,7 +22,7 @@ p, li{
 }
 
 header, .navbar{
-    background-color: #63101f;
+    background-color: #b0b0b0;
    
 }
 
@@ -37,7 +37,7 @@ header, .navbar{
 
 .navbar-brand{
     padding: 0;
-    color: white;
+    color: #63101f;
     
 }
 
@@ -46,13 +46,13 @@ header, .navbar{
 }
 
 #navbar-links a{
-    color: white;
-    background: #63101f
+    color: #63101f;
+    background: #b0b0b0
     
 }
 #navbar-links ul{
     color: black;
-    background-color: white
+    background-color: #63101f
     
 }
 

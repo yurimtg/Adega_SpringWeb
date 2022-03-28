@@ -15,16 +15,26 @@ public class Produto {
     private long qtd;
     private String status;
     private String descricao;
+    private String categoria;
     
     public Produto() {
 	}
 
-	public Produto(String nomeProduto, long qtd, String status, String descricao) {
+	public Produto(String nomeProduto, long qtd, String status, String descricao, String categoria) {
 		this.nomeProduto = nomeProduto;
 		this.qtd = qtd;
 		this.status = status;
 		this.descricao = descricao;
+                this.categoria = categoria;
 	}
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 
 	public long getId() {
 		return id;
@@ -68,7 +78,7 @@ public class Produto {
 
 	@Override
     public String toString() {
-        return "Produto{" + "id=" + id + ", nomeProduto=" + nomeProduto + ", qtd=" + qtd + ", status=" + status + ", descricao=" + descricao + '}';
+        return "Produto{" + "id=" + id + ", nomeProduto=" + nomeProduto + ", qtd=" + qtd + ", status=" + status + ", descricao=" + descricao + "categoria="+ categoria+ '}';
     }
       
 }
