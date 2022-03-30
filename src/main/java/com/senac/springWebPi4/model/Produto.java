@@ -80,5 +80,9 @@ public class Produto {
     public String toString() {
         return "Produto{" + "id=" + id + ", nomeProduto=" + nomeProduto + ", qtd=" + qtd + ", status=" + status + ", descricao=" + descricao + "categoria="+ categoria+ '}';
     }
+
+    public void setImagem(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
       
 }
