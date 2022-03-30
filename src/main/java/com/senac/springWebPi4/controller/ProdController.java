@@ -36,30 +36,40 @@ public class ProdController {
     @GetMapping("produto/form")
     public ModelAndView userForm() {
         ModelAndView mv = new ModelAndView("produto/prodForm");
+        Produto prod = new Produto();
+        mv.addObject("prod", prod);
         mv.addObject("status", Status.values());
         return mv;
     }
 
     @PostMapping("/criarProduto")
     public ModelAndView createProd(Produto prod, @RequestParam("file") MultipartFile arquivo) {
-        produtoRepository.save(prod);
         try {
             if (!arquivo.isEmpty()) {
+                produtoRepository.save(prod);
                 byte[] bytes = arquivo.getBytes();
                 Path caminho = Paths.get(caminhoImg + String.valueOf(prod.getId()) + arquivo.getOriginalFilename());
                 Files.write(caminho, bytes);
                 prod.setImagem(String.valueOf(prod.getId()) + arquivo.getOriginalFilename());
-                produtoRepository.save(prod);
+            } else {
+                Optional<Produto> produto = produtoRepository.findById(prod.getId());
+                if (produto.isPresent()) {
+                    Produto p = produto.get();
+                    prod.setImagem(p.getImagem());
+                }
             }
+            produtoRepository.save(prod);
+            
         } catch (Exception e) {
         }
         ModelAndView mv = new ModelAndView("produto/detalheProduto");
-        mv.addObject("list", prod);
+        mv.addObject("prod", prod);
         return mv;
     }
 
     @GetMapping("produto/list/{page}")
-    public ModelAndView userList(@PathVariable("page") int pagina) {
+    public ModelAndView userList(@PathVariable("page") int pagina
+    ) {
         Sort sort = Sort.by("id").descending();
         Pageable page = PageRequest.of(pagina, 10, sort);
         Page<Produto> produtos = produtoRepository.findAll(page);
@@ -72,7 +82,8 @@ public class ProdController {
 
     @GetMapping("produto/findByName/{page}/{nomepesquisa}")
     public ModelAndView findByName(@PathVariable("nomepesquisa") String nomepesquisa,
-            @PathVariable("page") int pagina) {
+            @PathVariable("page") int pagina
+    ) {
 
         Sort sort = Sort.by("id").descending();
         Pageable page = PageRequest.of(pagina, 10, sort);
@@ -98,7 +109,8 @@ public class ProdController {
     }
 
     @GetMapping("produto/detalhe/{id}")
-    public ModelAndView detalheProd(@PathVariable("id") Long id) {
+    public ModelAndView detalheProd(@PathVariable("id") Long id
+    ) {
         Optional<Produto> prod = produtoRepository.findById(id);
         if (prod.isPresent()) {
             Produto produto = prod.get();
@@ -106,6 +118,20 @@ public class ProdController {
             mv.addObject("prod", produto);
             return mv;
         }
-         return new ModelAndView("/home");
+        return new ModelAndView("/home");
+    }
+
+    @GetMapping("produto/edit/{id}")
+    public ModelAndView editProduto(@PathVariable("id") Long id
+    ) {
+        Optional<Produto> prod = produtoRepository.findById(id);
+        if (prod.isPresent()) {
+            Produto produto = prod.get();
+            ModelAndView mv = new ModelAndView("produto/prodForm");
+            mv.addObject("prod", produto);
+            mv.addObject("status", Status.values());
+            return mv;
+        }
+        return new ModelAndView("/home");
     }
 }
