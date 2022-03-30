@@ -1,48 +1,103 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragment :: head('user List')}"></head>
+    <script>
+        window.onload = function () {
+            let nPage = document.getElementById("nPage").value;
+            const nome = document.getElementById("pesquisa").value;
 
+            for (var i = 0; i < nPage; i++) {
+                if (i < 1) {
+                    const node = document.createElement("li");
+                    const nodeLink = document.createElement("a");
+                    node.setAttribute("class", "page-item");
+                    nodeLink.setAttribute("class", "page-link");
+                    nodeLink.text = "<<";
+                    if (nome === "") {
+                        nodeLink.href = "../../../produto/list/" + i;
+                    } else {
+                        nodeLink.href = "../../../produto/findByName/" + i + "/" + nome;
+                    }
+                    node.appendChild(nodeLink);
+                    document.getElementById("page").appendChild(node);
+                }
+
+                const node = document.createElement("li");
+                const nodeLink = document.createElement("a");
+                node.setAttribute("class", "page-item");
+                nodeLink.setAttribute("class", "page-link");
+                nodeLink.text = i + 1;
+                if (nome === "") {
+                    nodeLink.href = "../../../produto/list/" + i;
+                } else {
+                    nodeLink.href = "../../../produto/findByName/" + i + "/" + nome;
+                }
+                node.appendChild(nodeLink);
+                document.getElementById("page").appendChild(node);
+                if (i >= nPage - 1) {
+                    const node = document.createElement("li");
+                    const nodeLink = document.createElement("a");
+                    node.setAttribute("class", "page-item");
+                    nodeLink.setAttribute("class", "page-link");
+                    nodeLink.text = ">>";
+                    if (nome === "") {
+                        nodeLink.href = "../../../produto/list/" + i;
+                    } else {
+                        nodeLink.href = "../../../produto/findByName/" + i + "/" + nome;
+                    }
+                    node.appendChild(nodeLink);
+                    document.getElementById("page").appendChild(node);
+                }
+            }
+        };
+        function buscar() {
+            let nome = document.getElementById("pesquisa").value;
+            let link = document.getElementById("btnBusca");
+            if (nome === "") {
+                link.href = "../../../produto/list/0";
+            } else {
+                link.href = "../../../produto/findByName/0/" + nome;
+            }
+        }
+    </script>
     <body>
         <section class="container">
             <header th:replace="~{fragment :: header}"></header> 
             <main>
-                <form action="../produto/findByName" method="post"  class="d-flex  mt-4 col-md-5">
-                    <input name="nomepesquisa" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                <!--<form action="../../produto/findByName/1" method="get"  class="d-flex  mt-4 col-md-5">-->
+                <input id="pesquisa" th:value="${nomepesquisa}" name="nomepesquisa" class="form-control-sm mt-4 col-md-5" placeholder="Search" aria-label="Search">
+                    <a id="btnBusca" class="btn btn-primary" onclick="buscar()">Search</a>
+                    <!--</form>-->
 
-                <table class="table  mt-4">
-                    <thead>
-                        <tr>
-                            <td>Id</td>
-                            <td>Produto</td>
-                            <td>Qtd</td>
-                            <td>Status</td>                   
-                            <td>Descrição</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each = "lista:${list}">
-                            <td th:text="${lista.id}"></td>
-                            <td th:text="${lista.nomeProduto}"></td>
-                            <td th:text="${lista.qtd}"></td>
-                            <td th:text="${lista.status}"></td>
-                            <td th:text="${lista.descricao}"></td>
-                            <td><a th:href="@{detalheProduto/{prodId}(pordId = ${lista.id})}">Detalhe</a></td>
-                            <td><a th:href="@{prodEdit/{prodId}(pordId = ${lista.id})}">Alterar</a></td>
-                        </tr>
-                    </tbody>
-                </table>  
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
+                    <table class="table  mt-4">
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Produto</td>
+                                <td>Qtd</td>
+                                <td>Status</td>                   
+                                <td>Valor</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each = "lista:${list}">
+                                <td th:text="${lista.id}"></td>
+                                <td th:text="${lista.nomeProduto}"></td>
+                                <td th:text="${lista.qtd}"></td>
+                                <td th:text="${lista.status}"></td>
+                                <td th:text="${lista.valor}"></td>
+                                <!--<td><img th:src="@{/imagem/{imagem}(imagem = ${lista.imagem})}" width="100"/></td>-->
+                                <td><a th:href="@{detalheProduto/{prodId}(pordId = ${lista.id})}">Detalhe</a></td>
+                                <td><a th:href="@{prodEdit/{prodId}(pordId = ${lista.id})}">Alterar</a></td>
+                            </tr>
+                        </tbody>
+                    </table>  
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination" id="page">
+                        </ul>
+                    </nav>
             </main>
         </section>
+        <input id="nPage" th:value="${pagina}" style="visibility: hidden"/>
     </body>
 </html>

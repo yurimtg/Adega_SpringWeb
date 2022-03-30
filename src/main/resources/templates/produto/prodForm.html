@@ -5,13 +5,13 @@
         <section class="container">
             <header th:replace="~{fragment :: header}"></header> 
             <main>
-                <form action="/criarProduto" method="post">
+                <form action="/criarProduto" method="post" enctype="multipart/form-data">
                     <div class="row">
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label>Nome Produto</label>
                             <input type="text"  name="nomeProduto" class="form-control" placeholder="Nome Produto" required>
                         </div>
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label>Descrição</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="descricao" placeholder="Descrição" required>
@@ -19,19 +19,26 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label>Quantidade</label>
-                            <input type="number" name="qtd" class="form-control" placeholder="Quantidade" required>
+                            <input type="" name="qtd" class="form-control" placeholder="Quantidade" required>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-12 mb-3">
+                            <label>Valor</label>
+                            <input type="number" step="0.01" name="valor" class="form-control" placeholder="Valor" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
                             <label>Status</label>
-                            <select class="form-control" name="status">
+                            <select class="form-control col-md-12" name="status">
                                 <option th:each="status: ${status}"
                                         th:value="${status}"th:text="${status}"></option>
                             </select>
-                        </div>                       
+                        </div>    
+                        <input class="mb-4" type="file" name="file" accept="image/png,image/jpeg"/>
                     </div>
-                    <button class="btn btn-primary" type="submit">Cadastrar</button>
+                    <div class="col-md-12" style="text-align: center">
+                    <button class="btn btn-primary col-md-6" type="submit">Cadastrar</button>
+                    </div>
                 </form>
             </main>
             </<select>
