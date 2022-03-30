@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,7 +61,7 @@ public class ProdController {
     @GetMapping("produto/list/{page}")
     public ModelAndView userList(@PathVariable("page") int pagina) {
         Sort sort = Sort.by("id").descending();
-        Pageable page = PageRequest.of(pagina, 3, sort);
+        Pageable page = PageRequest.of(pagina, 10, sort);
         Page<Produto> produtos = produtoRepository.findAll(page);
         int nPage = produtos.getTotalPages();
         ModelAndView mv = new ModelAndView("produto/prodList");
@@ -74,7 +75,7 @@ public class ProdController {
             @PathVariable("page") int pagina) {
 
         Sort sort = Sort.by("id").descending();
-        Pageable page = PageRequest.of(pagina, 3, sort);
+        Pageable page = PageRequest.of(pagina, 10, sort);
         Page<Produto> produtos = null;
 
         produtos = produtoRepository.findByNomeProduto(nomepesquisa, page);
@@ -96,10 +97,15 @@ public class ProdController {
         return null;
     }
 
-    @GetMapping("produto/detalhe")
-    public ModelAndView detalheProd() {
-        ModelAndView mv = new ModelAndView("produto/detalheProduto");
-        mv.addObject("status", Status.values());
-        return mv;
+    @GetMapping("produto/detalhe/{id}")
+    public ModelAndView detalheProd(@PathVariable("id") Long id) {
+        Optional<Produto> prod = produtoRepository.findById(id);
+        if (prod.isPresent()) {
+            Produto produto = prod.get();
+            ModelAndView mv = new ModelAndView("produto/detalheProduto");
+            mv.addObject("prod", produto);
+            return mv;
+        }
+         return new ModelAndView("/home");
     }
 }

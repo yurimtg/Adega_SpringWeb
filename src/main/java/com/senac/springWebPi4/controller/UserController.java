@@ -58,7 +58,6 @@ public class UserController {
             mv.addObject("user", user);
             mv.addObject("tipoUser", UtilsTipoUsuario.values());
             mv.addObject("status", Status.values());
-            System.out.println(user.getId());
             return mv;
         } else {
             return new ModelAndView("redrect:/list");

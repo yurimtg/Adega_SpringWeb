@@ -87,7 +87,7 @@
                                 <td th:text="${lista.status}"></td>
                                 <td th:text="${lista.valor}"></td>
                                 <!--<td><img th:src="@{/imagem/{imagem}(imagem = ${lista.imagem})}" width="100"/></td>-->
-                                <td><a th:href="@{detalheProduto/{prodId}(pordId = ${lista.id})}">Detalhe</a></td>
+                                <td><a th:href="@{../../produto/detalhe/{id}(id = ${lista.id})}">Detalhe</a></td>
                                 <td><a th:href="@{prodEdit/{prodId}(pordId = ${lista.id})}">Alterar</a></td>
                             </tr>
                         </tbody>
