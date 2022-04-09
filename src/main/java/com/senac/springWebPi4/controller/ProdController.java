@@ -1,10 +1,10 @@
 package com.senac.springWebPi4.controller;
 
 import com.senac.springWebPi4.Utils.Status;
+import com.senac.springWebPi4.model.Imagem;
 import com.senac.springWebPi4.model.Produto;
+import com.senac.springWebPi4.repository.ImagemRepository;
 import com.senac.springWebPi4.repository.ProdutoRepository;
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +31,9 @@ public class ProdController {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private ImagemRepository imagemRepository;
 
     @GetMapping("produto/form")
     public ModelAndView userForm() {
@@ -59,7 +61,7 @@ public class ProdController {
                 }
             }
             produtoRepository.save(prod);
-            
+
         } catch (Exception e) {
         }
         ModelAndView mv = new ModelAndView("produto/detalheProduto");
@@ -82,8 +84,7 @@ public class ProdController {
 
     @GetMapping("produto/findByName/{page}/{nomepesquisa}")
     public ModelAndView findByName(@PathVariable("nomepesquisa") String nomepesquisa,
-            @PathVariable("page") int pagina
-    ) {
+            @PathVariable("page") int pagina) {
 
         Sort sort = Sort.by("id").descending();
         Pageable page = PageRequest.of(pagina, 10, sort);
@@ -98,24 +99,31 @@ public class ProdController {
         return mv;
     }
 
-    @GetMapping("/imagem/{imagem}")
-    @ResponseBody
-    public byte[] retornaImagem(@PathVariable("imagem") String imagem) throws IOException {
-        File imagemArquivo = new File(caminhoImg + imagem);
-        if (imagem != null || imagem.trim().length() > 0) {
-            return Files.readAllBytes(imagemArquivo.toPath());
-        }
-        return null;
-    }
-
+//    @GetMapping("/imagem/{imagem}")
+//    @ResponseBody
+//    public byte[] retornaImagem(@PathVariable("imagem") String imagem) throws IOException {
+//        File imagemArquivo = new File(caminhoImg + imagem);
+//        if (imagem != null || imagem.trim().length() > 0) {
+//            return Files.readAllBytes(imagemArquivo.toPath());
+//        }
+//        return null;
+//    }
     @GetMapping("produto/detalhe/{id}")
-    public ModelAndView detalheProd(@PathVariable("id") Long id
-    ) {
+    public ModelAndView detalheProd(@PathVariable("id") Long id) {
+
         Optional<Produto> prod = produtoRepository.findById(id);
+        List<Imagem> img = imagemRepository.findByFk_prodId(id);
+
         if (prod.isPresent()) {
             Produto produto = prod.get();
+            int tamanho = 0;
+            for (Imagem imagem : img) {
+                tamanho ++;
+            }
             ModelAndView mv = new ModelAndView("produto/detalheProduto");
             mv.addObject("prod", produto);
+            mv.addObject("imagem", img);
+            mv.addObject("tamanho", tamanho);
             return mv;
         }
         return new ModelAndView("/home");
@@ -134,4 +142,5 @@ public class ProdController {
         }
         return new ModelAndView("/home");
     }
+
 }

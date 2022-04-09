@@ -5,3 +5,10 @@
 .paginacao{
     margin-left: 40%;
 }
+
+.lImg{
+   height: 550px;
+}
+.hidden{
+    visibility: hidden;
+}
