@@ -3,11 +3,16 @@
     <head th:replace="~{fragment :: head('user List')}"></head>
     <body>
         <section class="container">
-        <header th:replace="~{fragment :: header}"></header> 
-        <mian>           
-            <h1>HomePage</h1>
-        </mian>
-        
+            <header th:replace="~{fragment :: header}"></header>  
+                <div class="cardHome card" style="float: left;" th:each="prod:${produto}">
+                    <img class="card-img-top" src="/imagem/102BrahmaLataImg01.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${prod.nomeProduto}">Card title</h5>
+                            <p class="card-text" th:text="'Valor R$: '+${prod.valor}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Adicionar</a>
+                             <a href="#" class="btn btn-primary" th:href="@{../../../produto/detalhe/{id}(id = ${prod.id})}">Detalhe</a>
+                        </div>
+                </div>
         </section>
     </body>
 </html>

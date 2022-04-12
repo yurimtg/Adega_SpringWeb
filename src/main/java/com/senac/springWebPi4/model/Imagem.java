@@ -18,7 +18,6 @@ public class Imagem {
     
     @JoinColumn
     private long fk_prodId;
-
     
         public Imagem(String img, long fk_prodId) {
         this.img = img;

@@ -1,5 +1,6 @@
 package com.senac.springWebPi4.controller;
 
+import com.senac.springWebPi4.Utils.Categoria;
 import com.senac.springWebPi4.Utils.Status;
 import com.senac.springWebPi4.model.Imagem;
 import com.senac.springWebPi4.model.Produto;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 //@RequestMapping("product")
@@ -41,32 +43,14 @@ public class ProdController {
         Produto prod = new Produto();
         mv.addObject("prod", prod);
         mv.addObject("status", Status.values());
+        mv.addObject("categoria", Categoria.values());
         return mv;
     }
 
     @PostMapping("/criarProduto")
-    public ModelAndView createProd(Produto prod, @RequestParam("file") MultipartFile arquivo) {
-        try {
-            if (!arquivo.isEmpty()) {
-                produtoRepository.save(prod);
-                byte[] bytes = arquivo.getBytes();
-                Path caminho = Paths.get(caminhoImg + String.valueOf(prod.getId()) + arquivo.getOriginalFilename());
-                Files.write(caminho, bytes);
-                prod.setImagem(String.valueOf(prod.getId()) + arquivo.getOriginalFilename());
-            } else {
-                Optional<Produto> produto = produtoRepository.findById(prod.getId());
-                if (produto.isPresent()) {
-                    Produto p = produto.get();
-                    prod.setImagem(p.getImagem());
-                }
-            }
-            produtoRepository.save(prod);
-
-        } catch (Exception e) {
-        }
-        ModelAndView mv = new ModelAndView("produto/detalheProduto");
-        mv.addObject("prod", prod);
-        return mv;
+    public RedirectView createProd(Produto prod) {
+        produtoRepository.save(prod);
+        return new RedirectView("produto/detalhe/" + prod.getId());
     }
 
     @GetMapping("produto/list/{page}")
@@ -99,34 +83,54 @@ public class ProdController {
         return mv;
     }
 
-//    @GetMapping("/imagem/{imagem}")
-//    @ResponseBody
-//    public byte[] retornaImagem(@PathVariable("imagem") String imagem) throws IOException {
-//        File imagemArquivo = new File(caminhoImg + imagem);
-//        if (imagem != null || imagem.trim().length() > 0) {
-//            return Files.readAllBytes(imagemArquivo.toPath());
-//        }
-//        return null;
-//    }
     @GetMapping("produto/detalhe/{id}")
     public ModelAndView detalheProd(@PathVariable("id") Long id) {
 
         Optional<Produto> prod = produtoRepository.findById(id);
         List<Imagem> img = imagemRepository.findByFk_prodId(id);
-
-        if (prod.isPresent()) {
-            Produto produto = prod.get();
-            int tamanho = 0;
-            for (Imagem imagem : img) {
-                tamanho ++;
-            }
-            ModelAndView mv = new ModelAndView("produto/detalheProduto");
-            mv.addObject("prod", produto);
-            mv.addObject("imagem", img);
-            mv.addObject("tamanho", tamanho);
-            return mv;
+        ModelAndView mv = new ModelAndView("produto/detalheProduto");
+        
+        Produto produto = prod.get();
+        int tamanho = 0;
+        for (Imagem imagem : img) {
+            tamanho++;
         }
-        return new ModelAndView("/home");
+        if (img.isEmpty()) {
+            Imagem img1 = new Imagem();
+            img1.setImg("semImagem.jpg");
+            mv.addObject("imagem", img1);
+            tamanho = 1;
+        }else{
+        mv.addObject("imagem", img);
+        }
+        
+        mv.addObject("prod", produto);
+
+        mv.addObject("tamanho", tamanho);
+        return mv;
+    }
+
+    @PostMapping("/salvarImagem")
+    public RedirectView salvarImagem(long id, @RequestParam("file") MultipartFile arquivo) {
+
+        Imagem img = new Imagem(caminhoImg, id);
+        try {
+            if (!arquivo.isEmpty()) {
+                byte[] bytes = arquivo.getBytes();
+                Path caminho = Paths.get(caminhoImg + String.valueOf(img.getFk_prodId()) + arquivo.getOriginalFilename());
+                Files.write(caminho, bytes);
+                img.setImg(String.valueOf(img.getFk_prodId()) + arquivo.getOriginalFilename());
+                imagemRepository.save(img);
+            } else {
+//                Optional<Produto> produto = produtoRepository.findById(prod.getId());
+//                if (produto.isPresent()) {
+//                    Produto p = produto.get();
+//                    prod.setImagem(p.getImagem());
+            }
+
+        } catch (Exception e) {
+        }
+        return new RedirectView("produto/detalhe/" + id);
     }
 
     @GetMapping("produto/edit/{id}")
@@ -138,6 +142,7 @@ public class ProdController {
             ModelAndView mv = new ModelAndView("produto/prodForm");
             mv.addObject("prod", produto);
             mv.addObject("status", Status.values());
+            mv.addObject("categoria", Categoria.values());
             return mv;
         }
         return new ModelAndView("/home");

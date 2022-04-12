@@ -12,3 +12,26 @@
 .hidden{
     visibility: hidden;
 }
+
+input[type="file"] {
+    display: none;
+}
+
+.imgAdd{
+    width:55%;
+}
+
+.imgAdd img{
+    width:20%;
+}
+
+.carousel-controler{
+    opacity: 50%;
+    color: black;
+    font-size: 30px;
+}
+
+.cardHome{ 
+    margin:2% 1% 0 1%;
+    width: 31%;
+}

@@ -34,10 +34,16 @@
                                         th:value="${status}"th:text="${status}"></option>
                             </select>
                         </div>    
-                        <input class="mb-4" type="file" name="file" accept="image/png,image/jpeg"/>
+                        <div class="col-md-12 mb-3">
+                            <label>Categoria</label>
+                            <select class="form-control col-md-12" name="categoria">
+                                <option th:each="categoria: ${categoria}"
+                                        th:value="${categoria}"th:text="${categoria}"></option>
+                            </select>
+                        </div>  
                     </div>
                     <div class="col-md-12" style="text-align: center">
-                    <button class="btn btn-primary col-md-6" type="submit">Cadastrar</button>
+                        <button class="btn btn-primary col-md-12 mt-3" type="submit">Cadastrar</button>
                     </div>
                     <input type="number" class="hidden" th:value="${prod.id}" name="id" required> 
                 </form>

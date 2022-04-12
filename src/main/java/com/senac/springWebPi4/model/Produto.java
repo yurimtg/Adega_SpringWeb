@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 
 @Entity
 public class Produto {
@@ -18,23 +17,23 @@ public class Produto {
     private String status;
     @Column(length = 1000)
     private String descricao;
-    private String imagem;
     private double valor;
+    private String categoria;
+    
+    public String getCategoria() {
+        return categoria;
+    }
 
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+        
     public double getValor() {
         return valor;
     }
 
     public void setValor(double valor) {
         this.valor = valor;
-    }
-
-    public String getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(String imagem) {
-        this.imagem = imagem;
     }
 
     public Produto() {

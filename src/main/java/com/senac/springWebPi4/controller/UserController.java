@@ -81,12 +81,6 @@ public class UserController {
         }
     }
 
-    @GetMapping("/home")
-    public ModelAndView homePage() {
-        ModelAndView mv = new ModelAndView("/home");
-        return mv;
-    }
-
     @PostMapping("/findByName")
     public ModelAndView findByName(@RequestParam("nomepesquisa") String nomepesquisa) {
         List<User> user = null;
