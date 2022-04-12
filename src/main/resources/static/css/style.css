@@ -34,4 +34,12 @@ input[type="file"] {
 .cardHome{ 
     margin:2% 1% 0 1%;
     width: 31%;
+    height: 450px;
 }
+
+.homeImg{
+   height: 200px;
+   width: 60%;
+}
+
+.carousel-item{text-align: center;}

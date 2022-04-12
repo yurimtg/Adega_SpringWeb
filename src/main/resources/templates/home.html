@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragment :: head('user List')}"></head>
-    <body>
-        <section class="container">
+    <body class="container">
+        <section>
             <header th:replace="~{fragment :: header}"></header>  
-                <div class="cardHome card" style="float: left;" th:each="prod:${produto}">
-                    <img class="card-img-top" src="/imagem/102BrahmaLataImg01.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${prod.nomeProduto}">Card title</h5>
-                            <p class="card-text" th:text="'Valor R$: '+${prod.valor}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Adicionar</a>
-                             <a href="#" class="btn btn-primary" th:href="@{../../../produto/detalhe/{id}(id = ${prod.id})}">Detalhe</a>
+
+            <div class="cardHome card" style="float: left;" th:each="prod,iterStat:${produto}">
+
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" >
+
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img  th:each = "fImg:${fistImg}" th:if="${prod.id == fImg.fk_prodId}" th:src="@{/imagem/{imagem}(imagem = ${fImg.img})}" class=" homeImg " alt="...">                                             
                         </div>
+                        <div th:each = "img:${outrasImg}" th:if="${prod.id == img.fk_prodId}" class="carousel-item">
+                            <img th:src="@{/imagem/{imagem}(imagem = ${img.img})}" class="homeImg" alt="...">                                             
+                        </div>
+                    </div>
+                    <p th:with="control=false"></p>
                 </div>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${prod.nomeProduto}">Card title</h5>
+                    <p class="card-text" th:text="'Valor R$: '+${prod.valor}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Adicionar</a>
+                    <a href="#" class="btn btn-primary" th:href="@{../../../produto/detalhe/{id}(id = ${prod.id})}">Detalhe</a>
+                </div>
+            </div>
         </section>
     </body>
 </html>
