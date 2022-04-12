@@ -7,7 +7,7 @@
 
             <div class="cardHome card" style="float: left;" th:each="prod,iterStat:${produto}">
 
-                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" >
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" >
 
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -17,13 +17,12 @@
                             <img th:src="@{/imagem/{imagem}(imagem = ${img.img})}" class="homeImg" alt="...">                                             
                         </div>
                     </div>
-                    <p th:with="control=false"></p>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${prod.nomeProduto}">Card title</h5>
-                    <p class="card-text" th:text="'Valor R$: '+${prod.valor}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Adicionar</a>
-                    <a href="#" class="btn btn-primary" th:href="@{../../../produto/detalhe/{id}(id = ${prod.id})}">Detalhe</a>
+                    <h5 class="card-title homeCard-title" th:text="${prod.nomeProduto}"></h5>
+                    <p class="card-text homeCard-text" th:text="'R$: '+${prod.valor}"></p>
+                    <a href="#" class="btn btn-primary col-md-12 mb-2">Adicionar ao Carrinho</a>
+                    <a href="#" class="btn btn-primary col-md-12" th:href="@{../../../produto/detalhe/{id}(id = ${prod.id})}">Detalhe do produto</a>
                 </div>
             </div>
         </section>

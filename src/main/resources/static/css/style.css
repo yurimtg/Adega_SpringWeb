@@ -7,7 +7,7 @@
 }
 
 .lImg{
-   height: 550px;
+    height: 550px;
 }
 .hidden{
     visibility: hidden;
@@ -31,15 +31,34 @@ input[type="file"] {
     font-size: 30px;
 }
 
-.cardHome{ 
+.cardHome{
     margin:2% 1% 0 1%;
     width: 31%;
-    height: 450px;
+    height: 420px;
 }
 
 .homeImg{
-   height: 200px;
-   width: 60%;
+    height: 200px;
+    width: 60%;
 }
 
-.carousel-item{text-align: center;}
+.carousel-item{
+    text-align: center;
+}
+
+.homeCard-title{
+    max-width: 30ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.homeCard-text{
+    color:  #00b300;
+    font-size: 20px;
+}
+
+.btnVoltar{
+    text-align: center;
+    text-decoration: none;
+}
