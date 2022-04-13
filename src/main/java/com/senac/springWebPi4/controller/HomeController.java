@@ -69,4 +69,31 @@ public class HomeController {
 
         return mv;
     }
+
+    @GetMapping("produto/detalheHome/{id}")
+    public ModelAndView detalheProd(@PathVariable("id") Long id) {
+
+        Optional<Produto> prod = produtoRepository.findById(id);
+        List<Imagem> img = imagemRepository.findByFk_prodId(id);
+        ModelAndView mv = new ModelAndView("produto/detalheProduto_1");
+
+        Produto produto = prod.get();
+        int tamanho = 0;
+        for (Imagem imagem : img) {
+            tamanho++;
+        }
+        if (img.isEmpty()) {
+            Imagem img1 = new Imagem();
+            img1.setImg("semImagem.jpg");
+            mv.addObject("imagem", img1);
+            tamanho = 1;
+        } else {
+            mv.addObject("imagem", img);
+        }
+
+        mv.addObject("prod", produto);
+
+        mv.addObject("tamanho", tamanho);
+        return mv;
+    }
 }

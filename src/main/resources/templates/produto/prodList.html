@@ -49,6 +49,16 @@
                     document.getElementById("page").appendChild(node);
                 }
             }
+            $(".chkStatus").click(function (e) {
+                
+                if (window.confirm("Deseja mudar o Status produto do ID:"+$(this).val())) {
+                    $.ajax({
+                        method: "POST",
+                        url: "/produto/alterarStatus",
+                        data: {id: $(this).val()}
+                    });
+                }else{e.preventDefault();}
+            });
         };
         function buscar() {
             let nome = document.getElementById("pesquisa").value;
@@ -59,7 +69,11 @@
                 link.href = "../../../produto/findByName/0/" + nome;
             }
         }
+
+
+
     </script>
+
     <body>
         <section class="container">
             <header th:replace="~{fragment :: header}"></header> 
@@ -81,7 +95,9 @@
                                 <td th:text="${lista.id}"></td>
                                 <td th:text="${lista.nomeProduto}" style="width: 45%"></td>
                                 <td th:text="${lista.qtd}"></td>
-                                <td th:text="${lista.status}"></td>
+                                <td style="text-align: center; width: 6%">
+                                    <input class="chkStatus" type="checkbox" th:value="${lista.id}" th:checked="${lista.status == 'ATIVO'} ? 'checked'">
+                                </td>
                                 <td th:text="${lista.valor}"></td>
                                 <td><a th:href="@{../../../produto/detalhe/{id}(id = ${lista.id})}">Detalhe</a></td>
                                 <td><a th:href="@{../../../produto/edit/{id}(id = ${lista.id})}">Alterar</a></td>

@@ -1,5 +1,6 @@
 package com.senac.springWebPi4.model;
 
+import com.senac.springWebPi4.Utils.Status;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

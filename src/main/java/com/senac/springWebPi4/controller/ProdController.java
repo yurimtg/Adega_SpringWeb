@@ -89,7 +89,7 @@ public class ProdController {
         Optional<Produto> prod = produtoRepository.findById(id);
         List<Imagem> img = imagemRepository.findByFk_prodId(id);
         ModelAndView mv = new ModelAndView("produto/detalheProduto");
-        
+
         Produto produto = prod.get();
         int tamanho = 0;
         for (Imagem imagem : img) {
@@ -100,10 +100,10 @@ public class ProdController {
             img1.setImg("semImagem.jpg");
             mv.addObject("imagem", img1);
             tamanho = 1;
-        }else{
-        mv.addObject("imagem", img);
+        } else {
+            mv.addObject("imagem", img);
         }
-        
+
         mv.addObject("prod", produto);
 
         mv.addObject("tamanho", tamanho);
@@ -148,4 +148,17 @@ public class ProdController {
         return new ModelAndView("/home");
     }
 
+    @PostMapping("produto/alterarStatus")
+    public void alterarStatus(Long id) {
+        Optional<Produto> prod = produtoRepository.findById(id);
+        Produto produto = prod.get();
+
+        if (produto.getStatus().equals(Status.ATIVO.toString())) {
+            produto.setStatus(Status.INATIVO.toString());
+        } else {
+            produto.setStatus(Status.ATIVO.toString());
+        }
+        produtoRepository.save(produto);
+    }
+   
 }
