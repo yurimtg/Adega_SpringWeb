@@ -12,6 +12,9 @@ public interface ProdutoRepository extends PagingAndSortingRepository<Produto, L
     @Query(value = "SELECT * FROM PRODUTO WHERE nome_produto like %?1%", nativeQuery = true)
     Page<Produto> findByNomeProduto(String nome, Pageable page);
     
+    @Query(value = "SELECT * FROM PRODUTO WHERE nome_produto like %?1%", nativeQuery = true)
+    List <Produto> findByNome(String nome);
+    
     List<Produto> findAll();
 
 }

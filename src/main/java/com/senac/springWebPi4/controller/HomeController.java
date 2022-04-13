@@ -69,6 +69,52 @@ public class HomeController {
 
         return mv;
     }
+    
+    @GetMapping("/home/{nomepesquisa}")
+    public ModelAndView homeFindByName(@PathVariable("nomepesquisa") String nomepesquisa) {
+        ModelAndView mv = new ModelAndView("/home");
+        List<Produto> prod = produtoRepository.findByNome(nomepesquisa);
+        List<Imagem> img = imagemRepository.findAll();
+        List<Imagem> firstImg = new ArrayList();
+        List<Imagem> imagens = new ArrayList();
+
+        for (Produto produto : prod) {
+            boolean achou = false;
+            for (Imagem imagem : img) {
+                if (produto.getId() == imagem.getFk_prodId() && achou == false) {
+                    Imagem fImg = new Imagem();
+                    fImg.setImg(imagem.getImg());
+                    fImg.setFk_prodId(imagem.getFk_prodId());
+                    fImg.setId(imagem.getId());
+                    firstImg.add(fImg);
+                    achou = true;
+                }
+            }
+        }
+
+        for (Imagem imagem : img) {
+            boolean achou = false;
+            for (Imagem fImg : firstImg) {
+                if (imagem.getId() == fImg.getId()) {
+                    achou = true;
+                }
+            }
+            if (achou == false) {
+                Imagem imgAux = new Imagem();
+                imgAux.setImg(imagem.getImg());
+                imgAux.setFk_prodId(imagem.getFk_prodId());
+                imgAux.setId(imagem.getId());
+                imagens.add(imgAux);
+            }
+        }
+
+        mv.addObject("produto", prod);
+        mv.addObject("imagem", img);
+        mv.addObject("fistImg", firstImg);
+        mv.addObject("outrasImg", imagens);
+
+        return mv;
+    }
 
     @GetMapping("produto/detalheHome/{id}")
     public ModelAndView detalheProd(@PathVariable("id") Long id) {
