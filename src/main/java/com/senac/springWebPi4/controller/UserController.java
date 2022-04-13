@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/create")
+    @PostMapping("/criarUsuario")
     public RedirectView createUser(User user) {
         userRepository.save(user);
         RedirectView redirectView = new RedirectView();
@@ -58,7 +58,6 @@ public class UserController {
             mv.addObject("user", user);
             mv.addObject("tipoUser", UtilsTipoUsuario.values());
             mv.addObject("status", Status.values());
-            System.out.println(user.getId());
             return mv;
         } else {
             return new ModelAndView("redrect:/list");
@@ -80,12 +79,6 @@ public class UserController {
         } else {
             return redirectView;
         }
-    }
-
-    @GetMapping("/home")
-    public ModelAndView homePage() {
-        ModelAndView mv = new ModelAndView("/home");
-        return mv;
     }
 
     @PostMapping("/findByName")

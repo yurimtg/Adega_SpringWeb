@@ -1,22 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <script>
-        function deletar(evt) {
-           if(confirm("Deseja deletar Usuario?")){
-               
-           }else{
-                evt.preventDefault();
-           }
-        }
-    </script>
     <head th:replace="~{fragment :: head('user List')}"></head>
-
     <body>
         <section class="container">
             <header th:replace="~{fragment :: header}"></header> 
             <main>
                 <form action="/findByName" method="post"  class="d-flex  mt-4 col-md-5">
-                    <input name="nomepesquisa" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input th:value="${param.nomepesquisa}" name="nomepesquisa" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragment :: head('user List')}"></head>
+    <script>
+        window.onload = function () {
+            let nPage = document.getElementById("nPage").value;
+            const nome = document.getElementById("pesquisa").value;
+
+            for (var i = 0; i < nPage; i++) {
+                if (i < 1) {
+                    const node = document.createElement("li");
+                    const nodeLink = document.createElement("a");
+                    node.setAttribute("class", "page-item");
+                    nodeLink.setAttribute("class", "page-link");
+                    nodeLink.text = "<<";
+                    if (nome === "") {
+                        nodeLink.href = "../../../produto/list/" + i;
+                    } else {
+                        nodeLink.href = "../../../produto/findByName/" + i + "/" + nome;
+                    }
+                    node.appendChild(nodeLink);
+                    document.getElementById("page").appendChild(node);
+                }
+
+                const node = document.createElement("li");
+                const nodeLink = document.createElement("a");
+                node.setAttribute("class", "page-item");
+                nodeLink.setAttribute("class", "page-link");
+                nodeLink.text = i + 1;
+                if (nome === "") {
+                    nodeLink.href = "../../../produto/list/" + i;
+                } else {
+                    nodeLink.href = "../../../produto/findByName/" + i + "/" + nome;
+                }
+                node.appendChild(nodeLink);
+                document.getElementById("page").appendChild(node);
+                if (i >= nPage - 1) {
+                    const node = document.createElement("li");
+                    const nodeLink = document.createElement("a");
+                    node.setAttribute("class", "page-item");
+                    nodeLink.setAttribute("class", "page-link");
+                    nodeLink.text = ">>";
+                    if (nome === "") {
+                        nodeLink.href = "../../../produto/list/" + i;
+                    } else {
+                        nodeLink.href = "../../../produto/findByName/" + i + "/" + nome;
+                    }
+                    node.appendChild(nodeLink);
+                    document.getElementById("page").appendChild(node);
+                }
+            }
+            $(".chkStatus").click(function (e) {
+                
+                if (window.confirm("Deseja mudar o Status produto do ID:"+$(this).val())) {
+                    $.ajax({
+                        method: "POST",
+                        url: "/produto/alterarStatus",
+                        data: {id: $(this).val()}
+                    });
+                }else{e.preventDefault();}
+            });
+        };
+        function buscar() {
+            let nome = document.getElementById("pesquisa").value;
+            let link = document.getElementById("btnBusca");
+            if (nome === "") {
+                link.href = "../../../produto/list/0";
+            } else {
+                link.href = "../../../produto/findByName/0/" + nome;
+            }
+        }
+
+
+
+    </script>
+
+    <body>
+        <section class="container">
+            <header th:replace="~{fragment :: header}"></header> 
+            <main>
+                <input id="pesquisa" th:value="${nomepesquisa}" name="nomepesquisa" class="form-control-sm mt-4 col-md-5 Search" placeholder="Search">
+                    <a id="btnBusca" class="btn btn-dark" onclick="buscar()">Search</a>
+                    <table class="table table-striped mt-4">
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Produto</td>
+                                <td>Qtd</td>
+                                <td>Status</td>                   
+                                <td>Valor</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each = "lista:${list}">
+                                <td th:text="${lista.id}"></td>
+                                <td th:text="${lista.nomeProduto}" style="width: 45%"></td>
+                                <td th:text="${lista.qtd}"></td>
+                                <td style="text-align: center; width: 6%">
+                                    <input class="chkStatus" type="checkbox" th:value="${lista.id}" th:checked="${lista.status == 'ATIVO'} ? 'checked'">
+                                </td>
+                                <td th:text="${lista.valor}"></td>
+                                <td><a style="color:black "th:href="@{../../../produto/detalhe/{id}(id = ${lista.id})}">Detalhe</a></td>
+                                <td><a style="color:black " th:href="@{../../../produto/edit/{id}(id = ${lista.id})}">Alterar</a></td>
+                            </tr>
+                        </tbody>
+                    </table>  
+                    <nav aria-label="Page navigation example" class="paginacao">
+                        <ul class="pagination" id="page">
+                        </ul>
+                    </nav>
+            </main>
+        </section>
+        <input id="nPage" th:value="${pagina}" style="visibility: hidden"/>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+    <script type="text/javascript" src="/js/jsDetalhe.js"></script>
+    <body class="container"> 
+        <header th:replace="~{fragment :: header}"></header> 
+        <section>   
+            <div class="card-group mt-3 mb-4">
+
+                <div class="card border-light">
+
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <div id="t">
+                            </div>
+                        </div>
+                        <div class="carousel-inner">
+                            <div th:each = "img,iterStat :${imagem}" th:classappend="${iterStat.first}? 'active'" class="carousel-item">
+                                <img th:src="@{/imagem/{imagem}(imagem = ${img.img})}" class="d-block w-100 lImg" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span aria-hidden="true"></span>
+                            <span class="carousel-controler"><</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span aria-hidden="true"></span>
+                            <span class="carousel-controler">></span>
+                        </button>
+                    </div>
+                    <!--                    <img class="card-img-top mt-5" th:src="@{/imagem/{imagem}(imagem = ${prod.imagem})}"/>         -->
+                </div>
+
+                <div class="card border-light">                  
+                    <div class="card-body">                
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"> <h4 th:text="${prod.nomeProduto}">Card title</h4></li>
+                            <li class="list-group-item" th:text="${prod.descricao}"></li>
+                            <li class="list-group-item" th:text="'Valor: R$ ' + ${prod.valor}"></li>
+                            <li class="list-group-item" th:text="'Categoria: '+${prod.categoria}"></li>
+                            <li class="list-group-item" th:text="'Estatus: '+${prod.status}"></li>
+                            <li class="list-group-item" th:text="'Estoque: '+${prod.qtd}"></li>
+                        </ul>
+                    </div>
+
+                    <form  class="m-4"action="/salvarImagem" method="post" enctype="multipart/form-data">
+                        <label id="lblFile" class="imgAdd"for="file"><img class="imgAdd" src="/imagem/Add.jpg">Adcionar Imagem</label> 
+                        <input class="mb-4" type="file" name="file" id="inputFile" accept="image/png,image/jpeg"/>
+                        <button class="btn btn-primary col-md-2" type="submit">Enviar</button>
+                        <input type="text" th:value="${prod.id}" name="id" class="hidden">
+                    </form>
+                    <a class="btn-primary btnVoltar" href="javascript:history.back()">VOLTAR</a>
+                </div>
+            </div>
+        </section>
+        <input id="maxV" type="type" name="name" class="hidden" th:value='${tamanho}'>
+    </body>
+</html>
