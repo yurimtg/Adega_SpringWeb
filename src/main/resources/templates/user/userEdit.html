@@ -7,11 +7,11 @@
             <main>
                 <form th:object="${user}" th:action="@{/editUser/{userId}(userId = ${user.id})}" method="post">
                     <div class="row">
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label>Nome</label>
                             <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome" required>
                         </div>
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label>E-mail</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -22,35 +22,35 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label>Telefone</label>
                             <input type="tel" th:field="*{telefone}" pattern="[0-9]{2}[0-9]{5}[0-9]{4}" class="form-control" placeholder="11988887777" required>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label>Data Nascimento</label>
                             <input type="date" th:field="*{data}" class="form-control" placeholder="Data Nascimento" required>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label>Cargo</label>
                             <select class="form-control" name="tipoUsuario">
                                 <option th:each="tipo: ${tipoUser}"
                                         th:value="${tipo}"th:text="${tipo}"></option>
                             </select>
                         </div>       
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label>Status</label>
                             <select class="form-control" name="status">
                                 <option th:each="status: ${status}"
                                         th:value="${status}"th:text="${status}"></option>
                             </select>
                         </div>
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label for="validationDefault05">Senha</label>
                             <input type="password" th:field="*{senha}"  class="form-control" placeholder="senha" required>
                         </div>
                     </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">Atualizar</button>
+                    <button class="btn btn-primary col-md-12" type="submit">Atualizar</button>
                 </form>
             </main>
         </section>

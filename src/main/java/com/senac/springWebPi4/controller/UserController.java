@@ -2,6 +2,7 @@ package com.senac.springWebPi4.controller;
 
 import com.senac.springWebPi4.Utils.Status;
 import com.senac.springWebPi4.Utils.UtilsTipoUsuario;
+import com.senac.springWebPi4.model.Produto;
 import com.senac.springWebPi4.model.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.senac.springWebPi4.repository.UserRepository;
 import java.util.Optional;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +27,8 @@ public class UserController {
 
     @PostMapping("/criarUsuario")
     public RedirectView createUser(User user) {
+        String encode = new BCryptPasswordEncoder().encode(user.getSenha());
+        user.setSenha(encode);
         userRepository.save(user);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl("/list");
@@ -92,5 +96,18 @@ public class UserController {
         ModelAndView mv = new ModelAndView("user/userlist");
         mv.addObject("list", user);
         return mv;
+    }
+    
+        @PostMapping("usuario/alterarStatus")
+    public void alterarStatus(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        User usuario = user.get();
+
+        if (usuario.getStatus().equals(Status.ATIVO.toString())) {
+            usuario.setStatus(Status.INATIVO.toString());
+        } else {
+            usuario.setStatus(Status.ATIVO.toString());
+        }
+        userRepository.save(usuario);
     }
 }
