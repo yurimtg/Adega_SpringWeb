@@ -3,7 +3,7 @@
     <head th:replace="~{fragment :: head('Product Form')}"></head>
     <script type="text/javascript" src="/js/jsDetalhe.js"></script>
     <body class="container"> 
-        <header th:replace="~{fragment :: header}"></header> 
+  
         <section>   
             <div class="card-group mt-3 mb-4">
 
@@ -37,17 +37,21 @@
                             <li class="list-group-item"> <h4 th:text="${prod.nomeProduto}">Card title</h4></li>
                             <li class="list-group-item" th:text="${prod.descricao}"></li>
                             <li class="list-group-item" th:text="'Valor: R$ ' + ${prod.valor}"></li>
-                            <li class="list-group-item" th:text="'Categoria: '+${prod.categoria}"></li>
-                            <li class="list-group-item" th:text="'Estatus: '+${prod.status}"></li>
-                            <li class="list-group-item" th:text="'Estoque: '+${prod.qtd}"></li>
+                           
+                            <li class="list-group-item" th:text="'Quantidade '"></li>
+                            <input type="number" th:value="${prod.qtd}" name="qtd" class="form-control" placeholder="Quantidade" required>
+                    
                         </ul>
+                        
                     </div>
 
-                   
-                    <a class="btn-primary btnVoltar" href="javascript:history.back()">VOLTAR</a>
+                    
+                    <button class="btn btn-dark col-md-12">Adicionar Carrinho</button><br>
+                    <a class="btn btn-dark col-md-12" href="javascript:history.back()">VOLTAR</a>
                 </div>
             </div>
         </section>
         <input id="maxV" type="type" name="name" class="hidden" th:value='${tamanho}'>
+        
     </body>
 </html>

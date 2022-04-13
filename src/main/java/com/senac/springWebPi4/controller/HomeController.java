@@ -121,7 +121,7 @@ public class HomeController {
 
         Optional<Produto> prod = produtoRepository.findById(id);
         List<Imagem> img = imagemRepository.findByFk_prodId(id);
-        ModelAndView mv = new ModelAndView("produto/detalheProduto_1");
+        ModelAndView mv = new ModelAndView("produto/detalheProdutoHome");
 
         Produto produto = prod.get();
         int tamanho = 0;
