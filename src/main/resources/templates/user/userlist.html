@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragment :: head('user List')}"></head>
-    <<script type="text/javascript">
+    <script type="text/javascript">
         window.onload = function () {
             $(".chkStatus").click(function (e) {
 
@@ -18,7 +18,7 @@
         };
     </script>
     <body>
-        <section class="container">
+        <section>
             <header th:replace="~{fragment :: header}"></header> 
             <main>
                 <form action="/findByName" method="post"  class="d-flex  mt-4 col-md-5">

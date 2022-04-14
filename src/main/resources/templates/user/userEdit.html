@@ -2,9 +2,10 @@
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragment :: head('User Edit')}"></head>
     <body>
-        <section class="container">
+   
             <header th:replace="~{fragment :: header}"></header> 
-            <main>
+            <section class="container">
+            <main  class="container">
                 <form th:object="${user}" th:action="@{/editUser/{userId}(userId = ${user.id})}" method="post">
                     <div class="row">
                         <div class="col-md-12 mb-3">

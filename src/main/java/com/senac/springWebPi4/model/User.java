@@ -1,22 +1,27 @@
 package com.senac.springWebPi4.model;
 
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 //@Table(name = "users")
-
+//implements UserDetails
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-//    @Column(nullable = false)
     private String nome;
     private String email;
     private String telefone;
@@ -24,6 +29,14 @@ public class User implements UserDetails {
     private String tipoUsuario; // Admin, estoquista
     private String status; // ATIVO, INATIVO
     private String data;
+    @ManyToMany
+    @JoinTable(
+            name = "usuarios_roles",
+            joinColumns = @JoinColumn(
+                    name = "usuario_id", referencedColumnName = "email"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "nomeRole"))
+    private List<Role> roles;
 
     public User() {
     }

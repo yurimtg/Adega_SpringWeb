@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.senac.springWebPi4.repository.UserRepository;
 import java.util.Optional;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,8 +27,8 @@ public class UserController {
 
     @PostMapping("/criarUsuario")
     public RedirectView createUser(User user) {
-        String encode = new BCryptPasswordEncoder().encode(user.getSenha());
-        user.setSenha(encode);
+//        String encode = new BCryptPasswordEncoder().encode(user.getSenha());
+//        user.setSenha(encode);
         userRepository.save(user);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl("/list");

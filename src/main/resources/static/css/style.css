@@ -1,3 +1,9 @@
+section{
+    
+ margin-bottom: 50px;
+ padding-bottom: 50px;   
+}
+
 .Search{
     margin-left: 50%;
 }
@@ -7,7 +13,7 @@
 }
 
 .lImg{
-    height: 550px;
+   height: 550px;
 }
 .hidden{
     visibility: hidden;
@@ -31,31 +37,37 @@ input[type="file"] {
     font-size: 30px;
 }
 
-.cardHome{
+.cardHome{ 
     margin:2% 1% 0 1%;
     width: 31%;
-    height: 388px;
+    height: 450px;
+    padding-bottom: 50px;
 }
 
 .homeImg{
-    height: 200px;
-    width: 60%;
+   height: 200px;
+   width: 60%;
 }
 
 .carousel-item{
     text-align: center;
+    padding: 5px;
+}
+body{text-align: center; 
 }
 
-.homeCard-title{
-    max-width: 30ch;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.estrelas input[type=radio] {
+  display: none;
 }
-
-.homeCard-text{
-    color:  #00b300;
-    font-size: 20px;
+.estrelas label i.fa{
+  font-size:1.0em
+}
+.estrelas label i.fa:before {
+  content:'\f005';
+  color: #FC0;
+}
+.estrelas input[type=radio]:checked ~ label i.fa:before {
+  color: #CCC;
 }
 
 .btnVoltar{
@@ -66,4 +78,19 @@ input[type="file"] {
 .btn-logout{
 font-size: 20px;
 margin-left: 60%;
+}
+
+.homeCard-title{
+  max-width: 35ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.imgLogout{
+    margin-left: 70%;
+}
+
+.item{
+    margin-left: 10%;
 }
