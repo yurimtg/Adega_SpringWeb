@@ -1,4 +1,3 @@
-
 package com.senac.springWebPi4.controller;
 
 import com.senac.springWebPi4.model.Cliente;
@@ -11,16 +10,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ClienteController {
-     @Autowired
+
+    @Autowired
     private ClienteRepository clienteRepository;
-     
+
     @PostMapping("cadastroCliente")
-    public ModelAndView userForm(Cliente cli) {
-        
+    public ModelAndView formCli(Cliente cli) {
+
         ModelAndView mv = new ModelAndView("home");
         clienteRepository.save(cli);
         return mv;
     }
 
-    
+    @GetMapping("cliente/cadastro")
+    public String cadastroCli() {
+        return "cliente/cadastroCli";
+    }
+
 }

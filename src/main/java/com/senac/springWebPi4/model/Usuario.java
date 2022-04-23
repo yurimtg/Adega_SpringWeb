@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.UniqueConstraint;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,10 +18,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 //implements UserDetails
 public class Usuario implements UserDetails {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String nome;
+    @Id
     private String email;
     private String telefone;
     private String senha;

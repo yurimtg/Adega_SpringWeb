@@ -13,32 +13,48 @@
 
 
 <header th:fragment="header"> 
-    <nav class="navbar navbar-expand-lg navbar-light " style="background-color:#df8300">
+    <nav style="background-color:#df8300;" class="navbar navbar-expand-lg navbar-light">
+        <div class="container px-4 px-lg-5">
+            <img src="../../imagem/logo.png" width="200px" height="40px" alt="alt"/>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Usuario
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/form">Cadastrar</a></li>
+                        <li><a class="dropdown-item" href="/list">Buscar</a></li>
+                    </ul>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Estoque
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../../../produto/form">Cadastrar</a></li>
+                        <li><a class="dropdown-item" href="../../../produto/list/0">Buscar</a></li>
+                    </ul>  
+                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/home">Home <span class="sr-only"></span></a>
-                </li>
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Usuario
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="/form">Cadastrar</a></li>
-                    <li><a class="dropdown-item" href="/list">Buscar</a></li>
                 </ul>
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Estoque
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="../../../produto/form">Cadastrar</a></li>
-                    <li><a class="dropdown-item" href="../../../produto/list/0">Buscar</a></li>
-                </ul>    
-            </ul> 
-                <a  class="imgLogout"  href="/logout">
-                    <img src="/imagem/logout.jpg" width="40px" height="40px" alt="alt"/>
-                </a>
 
-                    </div>
-                    </nav>
-                    </header>
+                <form class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a class="btn btn-outline-dark" href="/login">
+
+                        <img src="../../imagem/user.png" width="20px" height="20px" alt="alt"/>
+                        Login
+
+                    </a>
+                    <form>
+                        <form class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-outline-dark" type="submit">
+
+                                <img src="../../imagem/carrinho.png" width="20px" height="20px" alt="alt"/>
+                                Carrinho
+
+                            </button>
+                        </form>
+                        </div>
+                        </div>
+                        </nav>
+                        </header>
