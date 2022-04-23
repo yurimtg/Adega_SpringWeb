@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
     <head th:replace="~{fragment :: head('Product Form')}"></head>
+    <script type="text/javascript" src="/js/jsCEP.js"></script>
     <body>
-
         <header th:replace="~{fragment :: header}"></header> 
         <section class="container">
             <main >
@@ -23,7 +23,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label>Gernero</label>
+                            <label>Genero</label>
                             <select class="form-control col-md-12" name="genero">
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feminino">Feminino</option>
@@ -34,37 +34,38 @@
                             <label>CPF</label>
                             <input type="text"  name="CPF" class="form-control" placeholder="CPF" required>
                         </div> 
-                        <p>
+                        <h3>
                             Endereço de cobrança
-                        </p>
-                        <div class="col-md-9 mb-3">
-                            <label>Logradouro</label>
-                            <input type="text"  name="logradouro" class="form-control" placeholder="Rua" required>
-                        </div> 
-                       
-                        <div class="col-md-3 mb-3">
-                            <label>Nº</label>
-                            <input type="number"  name="numero" class="form-control" placeholder="Numero" required>
-                        </div> 
-                        <div class="col-md-12 mb-3">
+                        </h3>
+                        <div class="col-md-2 mb-3">
                             <label>CEP</label>
-                            <input type="text"  name="CEP" class="form-control" placeholder="CEP" required>
+                            <input type="text" name="cep" class="form-control" id="cep" value="" size="10" maxlength="9"
+                                   onblur="pesquisacep(this.value);"  placeholder="CEP">
                         </div> 
-                        <div class="col-md-12 mb-3">
-                            <label>Complemento</label>
-                            <input type="text"  name="complemento" class="form-control" placeholder="Complemento" required>
+                        <div class="col-md-5 mb-3">
+                            <label>Logradouro</label>
+                            <input type="text" name="rua" class="form-control" id="rua" placeholder="Rua" required>
                         </div> 
-                        <div class="col-md-6 mb-3">
+
+                        <div class="col-md-4 mb-3">
                             <label>Bairro</label>
-                            <input type="text"  name="bairro" class="form-control" placeholder="Bairro" required>
+                            <input type="text" name="bairro" class="form-control" id="bairro" placeholder="Bairro" required>
                         </div> 
                         <div class="col-md-4 mb-3">
                             <label>Cidade</label>
-                            <input type="text"  name="cidade" class="form-control" placeholder="Cidade" required>
+                            <input type="text" name="cidade" class="form-control" id="cidade" placeholder="Cidade" required>
                         </div> 
                         <div class="col-md-2 mb-3">
                             <label>UF</label>
-                            <input type="text"  name="UF" class="form-control" placeholder="UF" required>
+                            <input type="text" class="form-control" name="uf" id="uf" placeholder="UF" required>
+                        </div>
+                        <div class="col-md-8 mb-3">
+                            <label>Complemento</label>
+                            <input type="text"  name="complemento" class="form-control" placeholder="Complemento" required>
+                        </div> 
+                        <div class="col-md-3 mb-3">
+                            <label>Nº</label>
+                            <input type="number"  name="numero" class="form-control" placeholder="Nº" required>
                         </div> 
                         <div class="col-md-12 mb-3">
                             <label>Senha</label>
@@ -81,6 +82,7 @@
                     </div>
                 </form>
             </main>
-            </<select>                                   
+            </<select>   
+
                 </body>
                 </html>
