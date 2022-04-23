@@ -11,13 +11,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 //@Table(name = "users")
 //implements UserDetails
-public class User implements UserDetails {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,15 +31,15 @@ public class User implements UserDetails {
     @JoinTable(
             name = "usuarios_roles",
             joinColumns = @JoinColumn(
-                    name = "usuario_id", referencedColumnName = "email"),
+                    name = "email_id", referencedColumnName = "email"),
             inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "nomeRole"))
+                    name = "tipo_id", referencedColumnName = "nomeRole"))
     private List<Role> roles;
 
-    public User() {
+    public Usuario() {
     }
 
-    public User(String nome, String email, String telefone, String senha, String tipoUsuario, String status,
+    public Usuario(String nome, String email, String telefone, String senha, String tipoUsuario, String status,
             String data) {
         this.nome = nome;
         this.email = email;

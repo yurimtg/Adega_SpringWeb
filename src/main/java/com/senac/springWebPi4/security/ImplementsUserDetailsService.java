@@ -1,6 +1,6 @@
 package com.senac.springWebPi4.security;
 
-import com.senac.springWebPi4.model.User;
+import com.senac.springWebPi4.model.Usuario;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class ImplementsUserDetailsService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-		User usuario = user.findByEmail(login);
+		Usuario usuario = user.findByEmail(login);
 		
 		if(usuario == null){
 			throw new UsernameNotFoundException("Usuario não encontrado!");
