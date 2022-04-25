@@ -1,6 +1,5 @@
 package com.senac.springWebPi4.security;
 
-import com.senac.springWebPi4.security.ImplementsUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,9 +21,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/home").permitAll()
-//                .antMatchers(HttpMethod.GET, "/home/{nomepesquisa}").permitAll()
-//                .antMatchers(HttpMethod.GET, "/list").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/home").permitAll()
+                .antMatchers(HttpMethod.GET, "/home/{nomepesquisa}").permitAll()
+                .antMatchers(HttpMethod.GET, "/list").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and().formLogin().permitAll()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
