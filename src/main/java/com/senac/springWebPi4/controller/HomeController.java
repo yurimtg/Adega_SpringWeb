@@ -69,7 +69,7 @@ public class HomeController {
 
         return mv;
     }
-    
+
     @GetMapping("/home/{nomepesquisa}")
     public ModelAndView homeFindByName(@PathVariable("nomepesquisa") String nomepesquisa) {
         ModelAndView mv = new ModelAndView("/home");
@@ -142,4 +142,5 @@ public class HomeController {
         mv.addObject("tamanho", tamanho);
         return mv;
     }
+
 }

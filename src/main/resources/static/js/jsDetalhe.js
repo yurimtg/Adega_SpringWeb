@@ -1,18 +1,5 @@
 window.onload = function () {
-
-    var lblFile = document.getElementById("lblFile");
-    var input = document.getElementById("inputFile");
-
-    lblFile.addEventListener("click", function () {
-        input.click();
-    });
-    input.addEventListener("change", function () {
-        var nome = "Adicionar Imagem";
-        if (input.files.length > 0)
-            nome = input.files[0].name;
-        lblFile.innerHTML = "<img class='imgAdd' src='/imagem/Add.jpg'>" + nome;
-    });
-
+      
     let max = document.getElementById("maxV").value;
 
     for (var i = 0; i < max; i++) {

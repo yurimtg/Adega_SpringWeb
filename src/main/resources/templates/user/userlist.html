@@ -1,8 +1,24 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragment :: head('user List')}"></head>
+    <script type="text/javascript">
+        window.onload = function () {
+            $(".chkStatus").click(function (e) {
+
+                if (window.confirm("Deseja mudar o Status Usuario do ID:" + $(this).val())) {
+                    $.ajax({
+                        method: "POST",
+                        url: "/usuario/alterarStatus",
+                        data: {id: $(this).val()}
+                    });
+                } else {
+                    e.preventDefault();
+                }
+            });
+        };
+    </script>
     <body>
-        <section class="container">
+        <section>
             <header th:replace="~{fragment :: header}"></header> 
             <main>
                 <form action="/findByName" method="post"  class="d-flex  mt-4 col-md-5">
@@ -14,22 +30,24 @@
                     <thead>
                         <tr>
                             <td>Id</td>
+                            <td>Status</td>
                             <td>Nome</td>
                             <td>Data Nascimento</td>
                             <td>Email</td>
                             <td>Telefone</td>                   
-                            <td>Tipo</td>
+
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each = "lista:${list}">
                             <td th:text="${lista.id}"></td>
+                            <td style="text-align: center; width: 6%">
+                                <input class="chkStatus" type="checkbox" th:value="${lista.id}" th:checked="${lista.status == 'ATIVO'} ? 'checked'">
+                            </td>    
                             <td th:text="${lista.nome}"></td>
                             <td th:text="${lista.data}"></td>
                             <td th:text="${lista.email}"></td>
-                            <td th:text="${lista.telefone}"></td>
-                            <td th:text="${lista.tipoUsuario}"></td>
-                            <td th:text="${lista.status}"></td>
+                            <td th:text="${lista.telefone}"></td>                      
                             <td><a th:href="@{userEdit/{userId}(userId = ${lista.id})}">Alterar</a></td>
                         </tr>
                     </tbody>
