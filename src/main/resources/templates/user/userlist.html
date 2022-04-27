@@ -17,7 +17,7 @@
             });
         };
     </script>
-    <body>
+    <body style="background-color: black">
         <section>
             <header th:replace="~{fragment :: header}"></header> 
             <main>
@@ -48,7 +48,7 @@
                             <td th:text="${lista.data}"></td>
                             <td th:text="${lista.email}"></td>
                             <td th:text="${lista.telefone}"></td>                      
-                            <td><a th:href="@{userEdit/{userId}(userId = ${lista.id})}">Alterar</a></td>
+                            <td><a  style="color: white"th:href="@{userEdit/{userId}(userId = ${lista.id})}">Alterar</a></td>
                         </tr>
                     </tbody>
                 </table>    
