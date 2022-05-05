@@ -1,21 +1,31 @@
 package com.senac.springWebPi4.model;
 
-import java.util.Date;
+import java.util.Collection;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.xml.crypto.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Cliente {
+public class Cliente implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(unique = true)
     private String email;
     private String nome;
+    @Column(unique = true)
     private String CPF;
     private String dataNascimento;
     private String telefone;
@@ -28,6 +38,18 @@ public class Cliente {
     private String cidade;
     private String UF;
     private String CEP;
+    private String status;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "cliente_roles",
+            joinColumns = @JoinColumn(
+                    name = "cliente_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "nomeRole"))
+    private List<Role> roles;
+
+    @OneToMany(mappedBy = "cliente")
+    List<EnderecoEntrega> enderecos;
 
     public Cliente(String email, String nome, String CPF, String dataNascimento, String telefone, String genero, String senha, String logradouro, int numero, String complemento, String bairro, String cidade, String UF, String CEP) {
         this.email = email;
@@ -47,6 +69,40 @@ public class Cliente {
     }
 
     public Cliente() {
+    }
+
+    public List<EnderecoEntrega> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<EnderecoEntrega> enderecos) {
+        this.enderecos = enderecos;
+    }
+    
+    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public String getEmail() {
@@ -161,4 +217,52 @@ public class Cliente {
         this.CEP = CEP;
     }
 
+    public List<Role> getRolesCli() {
+        return roles;
+    }
+
+    public void setRolesCLi(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String getPassword() {
+        // TODO Auto-generated method stub
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        // TODO Auto-generated method stub
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return (Collection<? extends GrantedAuthority>) this.roles;
+    }
 }

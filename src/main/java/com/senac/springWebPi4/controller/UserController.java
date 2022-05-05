@@ -2,7 +2,7 @@ package com.senac.springWebPi4.controller;
 
 import com.senac.springWebPi4.Utils.Status;
 import com.senac.springWebPi4.Utils.UtilsTipoUsuario;
-import com.senac.springWebPi4.model.Produto;
+import com.senac.springWebPi4.model.Role;
 import com.senac.springWebPi4.model.Usuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.senac.springWebPi4.repository.UserRepository;
+import java.util.ArrayList;
 import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,8 +29,20 @@ public class UserController {
 
     @PostMapping("/criarUsuario")
     public RedirectView createUser(Usuario Usuario) {
+        Role role = new Role();
+        if (Usuario.getTipoUsuario().equals(UtilsTipoUsuario.ADMINISTRADOR.toString())) {
+            role.setNomeRole("ROLE_ADMIN");
+        } else {
+            role.setNomeRole("ROLE_ESTOQUE");
+        }
+
+        List<Role> rol = new ArrayList();
+        rol.add(role);
+        Usuario.setRoles(rol);
+
         String encode = new BCryptPasswordEncoder().encode(Usuario.getSenha());
         Usuario.setSenha(encode);
+
         userRepository.save(Usuario);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl("/list");
@@ -54,12 +67,10 @@ public class UserController {
 
     @GetMapping("/userEdit/{id}")
     public ModelAndView userEdit(@PathVariable("id") Long id, Usuario usuario) {
-        Optional<Usuario> optional = this.userRepository.findById(id);
+        Usuario user = this.userRepository.findId(id);
 
-        if (optional.isPresent()) {
-            Usuario user = optional.get();
+        if (user != null) {
             ModelAndView mv = new ModelAndView("user/userEdit");
-
             mv.addObject("user", user);
             mv.addObject("tipoUser", UtilsTipoUsuario.values());
             mv.addObject("status", Status.values());
@@ -71,15 +82,11 @@ public class UserController {
 
     @PostMapping("/editUser/{id}")
     public RedirectView editUser(@PathVariable long id, Usuario user) {
-
-        Optional<Usuario> optional = this.userRepository.findById(id);
-
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("/list");
-        if (optional.isPresent()) {
-            user.setSenha(optional.get().getSenha());
+        String encode = new BCryptPasswordEncoder().encode(user.getSenha());
+        user.setSenha(encode);
+        RedirectView redirectView = new RedirectView("/list");
+        if (user != null) {
             this.userRepository.save(user);
-
             return redirectView;
         } else {
             return redirectView;
@@ -98,17 +105,16 @@ public class UserController {
         mv.addObject("list", user);
         return mv;
     }
-    
-        @PostMapping("usuario/alterarStatus")
-    public void alterarStatus(Long id) {
-        Optional<Usuario> user = userRepository.findById(id);
-        Usuario usuario = user.get();
 
-        if (usuario.getStatus().equals(Status.ATIVO.toString())) {
-            usuario.setStatus(Status.INATIVO.toString());
+    @PostMapping("usuario/alterarStatus")
+    public void alterarStatus(Long id) {
+        Usuario user = userRepository.findId(id);
+
+        if (user.getStatus().equals(Status.ATIVO.toString())) {
+            user.setStatus(Status.INATIVO.toString());
         } else {
-            usuario.setStatus(Status.ATIVO.toString());
+            user.setStatus(Status.ATIVO.toString());
         }
-        userRepository.save(usuario);
+        userRepository.save(user);
     }
 }

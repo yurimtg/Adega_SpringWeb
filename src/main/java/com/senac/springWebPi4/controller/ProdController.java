@@ -38,7 +38,7 @@ public class ProdController {
     private ImagemRepository imagemRepository;
 
     @GetMapping("produto/form")
-    public ModelAndView userForm() {
+    public ModelAndView prodForm() {
         ModelAndView mv = new ModelAndView("produto/prodForm");
         Produto prod = new Produto();
         mv.addObject("prod", prod);
@@ -54,7 +54,7 @@ public class ProdController {
     }
 
     @GetMapping("produto/list/{page}")
-    public ModelAndView userList(@PathVariable("page") int pagina
+    public ModelAndView prodList(@PathVariable("page") int pagina
     ) {
         Sort sort = Sort.by("id").descending();
         Pageable page = PageRequest.of(pagina, 10, sort);
@@ -87,7 +87,7 @@ public class ProdController {
     public ModelAndView detalheProd(@PathVariable("id") Long id) {
 
         Optional<Produto> prod = produtoRepository.findById(id);
-        List<Imagem> img = imagemRepository.findByFk_prodId(id);
+        List<Imagem> img = prod.get().getImagens();
         ModelAndView mv = new ModelAndView("produto/detalheProduto");
 
         Produto produto = prod.get();
@@ -121,11 +121,6 @@ public class ProdController {
                 Files.write(caminho, bytes);
                 img.setImg(String.valueOf(img.getFk_prodId()) + arquivo.getOriginalFilename());
                 imagemRepository.save(img);
-            } else {
-//                Optional<Produto> produto = produtoRepository.findById(prod.getId());
-//                if (produto.isPresent()) {
-//                    Produto p = produto.get();
-//                    prod.setImagem(p.getImagem());
             }
 
         } catch (Exception e) {
@@ -160,5 +155,4 @@ public class ProdController {
         }
         produtoRepository.save(produto);
     }
-   
 }

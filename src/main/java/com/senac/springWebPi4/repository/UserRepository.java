@@ -14,5 +14,8 @@ List<Usuario> findByName(String nome);
 
 @Query("select p from Usuario p where p.email like ?1%")   
 Usuario findByEmail(String email);
+
+@Query("select p from Usuario p where p.id like ?1")  
+Usuario findId(Long id);
     
 }

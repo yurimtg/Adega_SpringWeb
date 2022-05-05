@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+    <script type="text/javascript" src="/js/jsCEP.js"></script>
+    <body>
+        <header th:replace="~{fragment :: header}"></header> 
+        <section class="container">
+            <main >
+                <form action="/attDadosCli" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label>Nome Completo</label>
+                            <input type="text"  name="nome" th:value="${cliente.nome}" class="form-control" placeholder="Nome Completo" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Data de Nascimento</label>
+                            <div class="input-group">
+                                <input type="date"  class="form-control" th:value="${cliente.dataNascimento}" name="dataNascimento" placeholder="Data" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Genero</label>
+                            <select class="form-control col-md-12" name="genero">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>   
+                         <div class="col-md-12 mb-3">
+                            <label>Nova senha</label>
+                            <input type="password"  name="senha" class="form-control" placeholder="Senha">
+                        </div>  
+                    </div>
+                    <div class="col-md-12" style="text-align: center">
+                        <button class="btn btn-dark col-md-12 mt-3" type="submit">Atualizar</button>
+                    </div>
+                </form>
+            </main>
+            </<select>   
+
+                </body>
+                </html>

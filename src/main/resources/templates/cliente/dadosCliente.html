@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+    <body>       
+        <header th:replace="~{fragment :: header}"></header> 
+        
+        <div class="card-group">
+            <div class="card" style="width: 25%; margin: 1%">
+                <div class="card-body" style="margin-left: 5%;">
+                    <h5 class="card-title" style="text-align: center">Dados Pessoais</h5>
+                    nome:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.nome}"></p>
+                    email:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.email}"></p>
+                    Telefone:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.telefone}"></p>
+                    Data Nascimento:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.dataNascimento}"></p>
+                    Genero:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.genero}"></p>
+                    <a href="../cliente/editDadosPessoais" class="card-link">Editar Dados</a>
+                </div>
+            </div>
+            
+            <div class="card" style="width: 25%; margin: 1%">
+                <div class="card-body" style="margin-left: 5%;">
+                    <h5 class="card-title" style="text-align: center">Endereço de Faturamento</h5>
+                    logradouro:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.logradouro}"></p>
+                    Nº:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.numero}"></p>
+                    bairro:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.bairro}"></p>
+                    CEP:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.CEP}"></p>
+                    Cidade:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${cliente.cidade}"></p>
+                </div>
+            </div>
+            
+            <div class="card" style="width: 25%; margin: 1%">
+                <div class="card-body" style="margin-left: 5%;" th:each="endereco:${enderecos}" th:if="${endereco.isEntrega}">
+                    <h5 class="card-title" style="text-align: center">Endereço de entrega</h5>
+                    Logradouro:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${endereco.logradouro}"></p>
+                    Nº:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${endereco.numero}"></p>
+                    Bairro:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${endereco.bairro}"></p>
+                    CEP:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${endereco.CEP}"></p>
+                    Cidade:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${endereco.cidade}"></p>
+                    <a href="../../cliente/novoEndereco" class="card-link">Novo endereço</a>
+                    <a href="../../cliente/mudarEndereco" class="card-link">Mudar endereço</a>
+                </div>
+            </div>
+                
+        </div>
+    </body>
+</html>

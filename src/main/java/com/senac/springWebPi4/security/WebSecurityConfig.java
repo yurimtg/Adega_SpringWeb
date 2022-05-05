@@ -23,10 +23,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/home").permitAll()
                 .antMatchers(HttpMethod.GET, "/home/{nomepesquisa}").permitAll()
+                .antMatchers(HttpMethod.POST, "/cadastroCliente").permitAll()
+                .antMatchers(HttpMethod.GET, "/cliente/cadastro").permitAll()
+                .antMatchers(HttpMethod.GET, "/produto/detalheHome/{id}").permitAll()
+                .antMatchers(HttpMethod.GET, "/cliente/cadastroEnderecoEntrega").permitAll()
+                .antMatchers(HttpMethod.GET, "/cliente/carrinho").permitAll()
+                .antMatchers(HttpMethod.GET, "/teste").permitAll()
+                
                 .antMatchers(HttpMethod.GET, "/list").hasRole("ADMIN")
-                .anyRequest().permitAll()
-                .and().formLogin().permitAll()
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+                .antMatchers(HttpMethod.GET, "/form").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/list").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/criarUsuario").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/userEdit/{id}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/editUser/{id}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/findByName").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/usuario/alterarStatus").hasRole("ADMIN")
+                
+                .antMatchers(HttpMethod.GET, "/produto/form").hasAnyRole("ADMIN","ESTOQUE")
+                .antMatchers(HttpMethod.GET, "/produto/list/{page}").hasAnyRole("ADMIN","ESTOQUE")
+                .antMatchers(HttpMethod.GET, "/produto/findByName/{page}/{nomepesquisa}").hasAnyRole("ADMIN","ESTOQUE")
+                .antMatchers(HttpMethod.GET, "/produto/detalhe/{id}").hasAnyRole("ADMIN","ESTOQUE")                
+                .antMatchers(HttpMethod.GET, "/salvarImagem").hasAnyRole("ADMIN","ESTOQUE")
+                .antMatchers(HttpMethod.GET, "/produto/edit/{id}").hasAnyRole("ADMIN","ESTOQUE")
+                .antMatchers(HttpMethod.GET, "/produto/alterarStatus").hasAnyRole("ADMIN","ESTOQUE")
+                
+                .antMatchers(HttpMethod.GET, "/cliente/dados").hasRole("CLIENTE")
+
+                .anyRequest().authenticated()
+                .and().formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();
     }
 
     @Override

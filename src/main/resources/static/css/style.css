@@ -75,22 +75,10 @@ body{text-align: center;
     text-decoration: none;
 }
 
-.btn-logout{
-font-size: 20px;
-margin-left: 60%;
-}
 
 .homeCard-title{
   max-width: 35ch;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.imgLogout{
-    margin-left: 70%;
-}
-
-.item{
-    margin-left: 10%;
 }

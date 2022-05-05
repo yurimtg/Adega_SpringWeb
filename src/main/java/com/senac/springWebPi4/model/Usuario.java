@@ -2,23 +2,23 @@ package com.senac.springWebPi4.model;
 
 import java.util.Collection;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.UniqueConstraint;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-//@Table(name = "users")
-//implements UserDetails
 public class Usuario implements UserDetails {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
     private long id;
     private String nome;
     @Id
@@ -28,13 +28,13 @@ public class Usuario implements UserDetails {
     private String tipoUsuario; // Admin, estoquista
     private String status; // ATIVO, INATIVO
     private String data;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuarios_roles",
             joinColumns = @JoinColumn(
-                    name = "email_id", referencedColumnName = "email"),
+                    name = "usuario_id", referencedColumnName = "email"),
             inverseJoinColumns = @JoinColumn(
-                    name = "tipo_id", referencedColumnName = "nomeRole"))
+                    name = "role_id", referencedColumnName = "nomeRole"))
     private List<Role> roles;
 
     public Usuario() {
@@ -116,13 +116,16 @@ public class Usuario implements UserDetails {
     }
 
     @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", nome=" + nome + ", email=" + email + ", telefone=" + telefone + ", senha=" + senha + ", tipoUsuario=" + tipoUsuario + ", data=" + data + '}';
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return (Collection<? extends GrantedAuthority>) this.roles;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

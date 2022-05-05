@@ -17,6 +17,10 @@ public class Role implements GrantedAuthority {
     @ManyToMany(mappedBy = "roles")
     private List<Usuario> usuarios;
 
+    @ManyToMany(mappedBy = "roles")
+    private List<Cliente> Clientes;
+    
+
     public String getNomeRole() {
         return nomeRole;
     }
@@ -33,6 +37,14 @@ public class Role implements GrantedAuthority {
         this.usuarios = usuarios;
     }
 
+    public List<Cliente> getClientes() {
+        return Clientes;
+    }
+
+    public void setClientes(List<Cliente> Clientes) {
+        this.Clientes = Clientes;
+    }
+    
     @Override
     public String getAuthority() {
         // TODO Auto-generated method stub

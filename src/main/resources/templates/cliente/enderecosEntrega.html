@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+    <body>       
+        <header th:replace="~{fragment :: header}"></header> 
+         <h5 class="card-title" style="text-align: center">Endereços de entrega</h5>
+        <div class="card-group">               
+            <div class="card col-md-4" th:each="enderecos:${enderecos}">
+                <div class="card-body" style="margin-left: 5%;">
+                    <p class="card-subtitle mb-2 text-muted" th:if="${enderecos.isEntrega}"> Endereço Selecionado</p>
+                    Logradouro:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${enderecos.logradouro}"></p>
+                    Nº:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${enderecos.numero}"></p>
+                    Bairro:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${enderecos.bairro}"></p>
+                    CEP:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${enderecos.CEP}"></p>
+                    Cidade:
+                    <p class="card-subtitle mb-2 text-muted" th:text="${enderecos.cidade}"></p>
+                    <a href="#" class="card-link">Editar</a>
+                    <a th:href="@{../../../mudarSelecao/{id}(id = ${enderecos.id})}" class="card-link">Selecionar</a>
+                </div>
+            </div>           
+        </div>
+    </body>
+</html>
