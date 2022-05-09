@@ -10,7 +10,7 @@ public class SpringWebPi4 {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringWebPi4.class, args);
-                 String encode = new BCryptPasswordEncoder().encode("yuri");
+                 String encode = new BCryptPasswordEncoder().encode("DanielSanoli7");
                  System.out.println(encode);
                
 	}

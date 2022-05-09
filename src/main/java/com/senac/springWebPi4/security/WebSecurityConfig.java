@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 
                 .antMatchers(HttpMethod.GET, "/cliente/dados").hasRole("CLIENTE")
 
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and().formLogin()
                 .loginPage("/login")
                 .permitAll()
