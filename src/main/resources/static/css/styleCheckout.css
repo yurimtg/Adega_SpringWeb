@@ -19,3 +19,7 @@
 #credit{
     display: none;
 }
+
+#btnBoleto {
+	background-color: yellow;
+}
