@@ -2,8 +2,23 @@
 <html lang="en">
     <head th:replace="~{fragment :: head('Product Form')}"></head>
     <script type="text/javascript" src="/js/jsDetalhe.js"></script>
+    <script type="text/javascript">
+        function addCarrinho(){
+           let link = document.getElementById("addCarrinho");
+           let id = document.getElementById("prodId").value;
+           let qtd = document.getElementById("qtd").value;
+           link.href="../../../../adicionar/carrinho/"+id+"/"+qtd+"/add";
+        }
+        
+        function quantidade(){
+            let qtd = document.getElementById("qtd");
+            if(qtd.value < 1){
+                qtd.value = 1;
+            }
+        }
+    </script>
     <body> 
-
+        <header th:replace="~{fragment :: header}"></header> 
         <section>   
             <div class="card-group mt-3 mb-4">
 
@@ -34,13 +49,13 @@
                 <div class="card border-light">                  
                     <div class="card-body">                
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"> <h4 th:text="${prod.nomeProduto}">Card title</h4></li>
+                            <li class="list-group-item"> <h4 th:text="${prod.nomeProduto}"></h4></li>
                             <li class="list-group-item" th:text="${prod.descricao}"></li>
                             <li class="list-group-item" th:text="'Valor: R$ ' + ${prod.valor}"></li>
 
                             <li class="list-group-item mt-4">
                                 <span>Qauntidade:</span>
-                                <input type="number"name="qtd" class=" col-md-3 ml-4" placeholder="un" required>
+                                <input type="number" value="1" id='qtd' onblur="quantidade()" class=" col-md-3 ml-4" placeholder="un" minlength="1" required>
                             </li>
 
 
@@ -49,12 +64,13 @@
                     </div>
 
 
-                    <button class="btn btn-dark col-md-12">Adicionar Carrinho</button><br>
+                    <a class="btn btn-dark col-md-12" id='addCarrinho' onclick="addCarrinho()">Adicionar Carrinho</a><br>
                     <a class="btn btn-dark col-md-12" href="javascript:history.back()">VOLTAR</a>
+                    <input id="prodId" type="text" class="hidden" th:value='${prod.id}'>
                 </div>
             </div>
         </section>
-        <input id="maxV" type="type" name="name" class="hidden" th:value='${tamanho}'>
-
+        <input id="maxV" type="type"class="hidden" th:value='${tamanho}'>
+        
     </body>
 </html>

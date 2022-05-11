@@ -2,6 +2,7 @@ package com.senac.springWebPi4.model;
 
 import java.util.Collection;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -50,7 +52,10 @@ public class Cliente implements UserDetails {
 
     @OneToMany(mappedBy = "cliente")
     List<EnderecoEntrega> enderecos;
-
+    
+    @OneToOne(mappedBy = "cli")
+    private Carrinho carrinho;
+    
     public Cliente(String email, String nome, String CPF, String dataNascimento, String telefone, String genero, String senha, String logradouro, int numero, String complemento, String bairro, String cidade, String UF, String CEP) {
         this.email = email;
         this.nome = nome;
@@ -71,6 +76,14 @@ public class Cliente implements UserDetails {
     public Cliente() {
     }
 
+    public Carrinho getCarrinho() {
+        return carrinho;
+    }
+
+    public void setCarrinho(Carrinho carrinho) {
+        this.carrinho = carrinho;
+    }
+    
     public List<EnderecoEntrega> getEnderecos() {
         return enderecos;
     }
@@ -78,8 +91,6 @@ public class Cliente implements UserDetails {
     public void setEnderecos(List<EnderecoEntrega> enderecos) {
         this.enderecos = enderecos;
     }
-    
-    
 
     public String getStatus() {
         return status;

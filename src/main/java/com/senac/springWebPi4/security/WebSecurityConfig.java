@@ -28,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/produto/detalheHome/{id}").permitAll()
                 .antMatchers(HttpMethod.GET, "/cliente/cadastroEnderecoEntrega").permitAll()
                 .antMatchers(HttpMethod.GET, "/cliente/carrinho").permitAll()
+                .antMatchers(HttpMethod.GET, "/adicionar/carrinho/{id}/{qtd}/{status}").permitAll()
+                .antMatchers(HttpMethod.GET, "/carrinho/dropItem/{id}").permitAll()
                 .antMatchers(HttpMethod.GET, "/teste").permitAll()
                 
                 .antMatchers(HttpMethod.GET, "/list").hasRole("ADMIN")

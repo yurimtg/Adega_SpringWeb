@@ -4,9 +4,12 @@ import com.senac.springWebPi4.Utils.Status;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,10 +25,21 @@ public class Produto {
     private String descricao;
     private double valor;
     private String categoria;
-    
+
     @OneToMany(mappedBy = "produto")
-    List <Imagem> imagens;
-    
+    List<Imagem> imagens;
+
+    @OneToMany(mappedBy = "prod")
+    List<Carrinho> carrinho;
+
+    public List<Carrinho> getCarrinho() {
+        return carrinho;
+    }
+
+    public void setCarrinho(List<Carrinho> carrinho) {
+        this.carrinho = carrinho;
+    }
+
     public String getCategoria() {
         return categoria;
     }
@@ -41,8 +55,7 @@ public class Produto {
     public void setImagens(List<Imagem> imagens) {
         this.imagens = imagens;
     }
-     
-    
+
     public double getValor() {
         return valor;
     }
