@@ -171,7 +171,7 @@ public class ClienteController {
     @PostMapping("cadastroNovoEndereco")
     public RedirectView cadastroNovoEndereco(EnderecoEntrega end) {
 
-        List<EnderecoEntrega> endAtivo = new ArrayList();
+        EnderecoEntrega endAtivo = new EnderecoEntrega();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Cliente cliente = (Cliente) authentication.getPrincipal();
 

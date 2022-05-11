@@ -82,3 +82,27 @@ body{text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.container-fluid {
+    padding: 0;
+}
+
+#carouselExampleIndicators .carousel-caption {
+    top: 10%;
+}
+
+.btn-comprar{
+    padding: 10px;
+}
+
+.btn-estilo{
+    padding: 10px;
+}
+
+#credit{
+    display: none;
+}
+
+#boleto{
+    display: none;
+}

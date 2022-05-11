@@ -32,6 +32,17 @@ public class Produto {
     @OneToMany(mappedBy = "prod")
     List<Carrinho> carrinho;
 
+    @OneToMany(mappedBy = "ItemProduto")
+    List<ItemPedido> itemPedido;
+
+    public List<ItemPedido> getItemPedido() {
+        return itemPedido;
+    }
+
+    public void setItemPedido(List<ItemPedido> itemPedido) {
+        this.itemPedido = itemPedido;
+    }
+
     public List<Carrinho> getCarrinho() {
         return carrinho;
     }

@@ -52,10 +52,13 @@ public class Cliente implements UserDetails {
 
     @OneToMany(mappedBy = "cliente")
     List<EnderecoEntrega> enderecos;
-    
+
     @OneToOne(mappedBy = "cli")
     private Carrinho carrinho;
-    
+
+    @OneToMany(mappedBy = "clientePedido")
+    List<Pedido> pedido;
+
     public Cliente(String email, String nome, String CPF, String dataNascimento, String telefone, String genero, String senha, String logradouro, int numero, String complemento, String bairro, String cidade, String UF, String CEP) {
         this.email = email;
         this.nome = nome;
@@ -73,6 +76,14 @@ public class Cliente implements UserDetails {
         this.CEP = CEP;
     }
 
+    public List<Pedido> getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(List<Pedido> pedido) {
+        this.pedido = pedido;
+    }
+    
     public Cliente() {
     }
 
@@ -83,7 +94,7 @@ public class Cliente implements UserDetails {
     public void setCarrinho(Carrinho carrinho) {
         this.carrinho = carrinho;
     }
-    
+
     public List<EnderecoEntrega> getEnderecos() {
         return enderecos;
     }

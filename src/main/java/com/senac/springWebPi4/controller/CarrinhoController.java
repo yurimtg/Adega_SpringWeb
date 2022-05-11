@@ -88,6 +88,7 @@ public class CarrinhoController {
                 novoItem.setCli(cli);
                 novoItem.setPreco(prod.get().getValor());
                 novoItem.setTotal(prod.get().getValor() * qtd);
+                novoItem.setQtd(qtd);
                 carrinhoRepository.save(novoItem);
             }
         } else {

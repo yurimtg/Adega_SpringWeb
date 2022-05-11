@@ -8,6 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface EnderecoEntregaRepository extends PagingAndSortingRepository<EnderecoEntrega, Long> {
     
     @Query(value = "SELECT * FROM endereco_entrega WHERE cliente_id like ?1 and is_entrega = true", nativeQuery = true)
-    List<EnderecoEntrega> findByIsEntregas(Long id);
+    EnderecoEntrega findByIsEntregas(Long id);
 
 }

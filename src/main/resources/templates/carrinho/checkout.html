@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+
+    <script type="text/javascript">
+
+        window.onload = function () {
+            var total = document.getElementsByClassName("total");
+            var precoTotal = document.getElementById("precoTotal");
+            var entrega = document.getElementById("entrega");
+            var qtd = document.getElementById("qtdItem");
+            
+            var hdnTaxa = document.getElementById("hdnTaxa");
+   
+            
+            var aux = 0;
+
+            entrega.innerHTML = Math.floor(Math.random() * 10);
+
+            for (i = 0; i < total.length; i++) {
+                total[i].innerHTML = parseFloat(total[i].innerHTML).toFixed(2);
+                aux += (parseFloat(total[i].innerHTML));
+                qtd.innerHTML = i + 1;
+            }
+            aux += parseFloat(entrega.innerHTML);
+            hdnTaxa.value = entrega.innerHTML;
+            precoTotal.innerHTML = aux.toFixed(2);
+        };
+    </script>
+    <body class="bg-light">
+
+        <header th:replace="~{fragment :: header}"></header> 
+
+        <div class="container">
+            <div class="py-5 text-center">
+
+                <h2>Formulário de checkout</h2>
+
+            </div>
+
+            <form action="/confirmarCompra" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-4 order-md-2 mb-4">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Seu carrinho</span>
+                            <label class="badge badge-secondary badge-pill" id="qtdItem"></label>
+                        </h4>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed" th:if='${carrinho}!= null' th:each='item:${carrinho}'>
+                                <div>
+                                    <h6 class="my-0" th:text='${item.prod.nomeProduto}'>Nome do produto</h6>
+                                    <small class="text-muted" th:text="${item.qtd}+'x'"></small>
+                                    <small class="text-muted" th:text="'R$'+${item.preco}"></small>
+
+                                </div>
+                                <label class="text-muted total" th:text="${item.total}"></label>
+                            </li> 
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">Taxa de entrega</h6>                       
+                                </div>
+                                <label class="text-muted" id="entrega"></label>
+                            </li> 
+                            <li class="list-group-item d-flex justify-content-between">
+                                <label>Total (BRL)</label>
+                                <strong>R$<label id="precoTotal"></label></strong>
+                            </li>
+                        </ul>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Finalizar Compra</button>
+                    </div>
+                    <div class="col-md-8 order-md-1">
+                        <hr class="mb-4">
+                        <div th:if="${endereco} != null">
+                            <h3>Endereço de entrega</h3><br>
+                            <label th:text="${endereco.logradouro}+','"></label>
+                            <label th:text="${endereco.numero}"></label><br>
+                            <label th:text="${endereco.cidade+','}"></label>
+                            <label th:text="${endereco.UF}"></label>
+                            <label th:text="${endereco.CEP}"></label><br>
+                            <a class="btn btn-primary btn-sm btn-block mt-3"  href="../../cliente/mudarEndereco">Alterar endereço de entrega</a>
+
+                        </div>
+                        <hr class="mb-4">
+                        <h4 class="mb-3">Pagamento</h4>
+
+                        <div class="d-block my-3">
+                            <div class="custom-control custom-radio">
+                                <input id="rboCartao" onclick="metodoPagamento()" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                <label class="custom-control-label" for="credito">Cartão de crédito</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input id="rboBoleto" onclick="metodoPagamento()" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                <label class="custom-control-label" for="debito">Boleto bancário</label>
+                            </div>
+
+                        </div>
+
+                        <input class="hidden" type="text" id="Pagamento" name="pagamento">
+                        <input class="hidden" type="text" id="hdnTaxa" name="taxa">
+
+                        <div class="row" id="boleto">
+                            <label><strong>34191.79001 01043.510047 91020.150008 8 89820026000</strong></label>
+                            <a href="#">Copiar</a>
+                        </div>
+
+                        <div class="row" id="credit">
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-nome">Nome no cartão</label>
+                                <input type="text" class="form-control" id="cc-nome" placeholder="">
+                                <small class="text-muted">Nome completo, como mostrado no cartão.</small>
+                                <div class="invalid-feedback">
+                                    O nome que está no cartão é obrigatório.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-numero">Número do cartão de crédito</label>
+                                <input type="text" class="form-control" id="cc-numero" placeholder="">
+                                <div class="invalid-feedback">
+                                    O número do cartão de crédito é obrigatório.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <label for="cc-expiracao">Data de expiração</label>
+                                    <input type="text" class="form-control" id="cc-expiracao" placeholder="">
+                                    <div class="invalid-feedback">
+                                        Data de expiração é obrigatória.
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="cc-cvv">CVV</label>
+                                    <input type="text" class="form-control" id="cc-cvv" placeholder="">
+                                    <div class="invalid-feedback">
+                                        Código de segurança é obrigatório.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            <footer class="my-5 pt-5 text-muted text-center text-small">
+                <p class="mb-1">&copy; 2022 Dionisio</p>
+            </footer>
+        </div>
+    </body>
+
+</html>
+<script src="/js/checkout.js"></script>
+
+</html>
