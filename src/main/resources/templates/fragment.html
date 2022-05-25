@@ -37,6 +37,8 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="../../../produto/form">Cadastrar</a></li>
                         <li><a class="dropdown-item" href="../../../produto/list/0">Buscar</a></li>
+                         <li><a class="dropdown-item" href="../../../../user/pedido">Pedido</a></li>
+                               
                     </ul>  
                     <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
 
@@ -58,7 +60,8 @@
                                 <span th:text="${#authentication.principal.nome}"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="../../../../cliente/dados">Meus dados</a></li>
+                                <li><a class="dropdown-item" href="../../../../cliente/dados" sec:authorize="hasRole('ROLE_ADMIN')or hasRole('ROLE_CLIENTE')" >Meus dados</a></li>
+                                <li><a class="dropdown-item" href="../../../../cliente/pedido" sec:authorize="hasRole('ROLE_ADMIN')or hasRole('ROLE_CLIENTE')">Pedido</a></li>
                                 <li><a class="dropdown-item" href="/logout">sair</a></li>
                             </ul>  
                         </span>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+
+    <body class="bg-light">
+
+        <header th:replace="~{fragment :: header}"></header> 
+        
+        <div class="text-center">
+
+            <h2>Pedidos</h2>
+
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" class=" text-center">Pedido</th>
+                        <th scope="col" class=" text-center">Data</th>
+                        <th scope="col" class=" text-center">status</th>
+                        <th scope="col" class=" text-center">Pagamento</th>
+                        <th scope="col" class=" text-center">Total</th>
+                        <th scope="col" class=" text-center">Detalhe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pedido: ${pedido}">
+
+                        <td th:text="'#'+${pedido.id}"></td>
+                        <td th:text="${pedido.data}"></td>
+                        <td th:text="${pedido.statusPedido}"></td>
+                        <td th:text="${pedido.pagamento}"></td>
+                        <td th:text="${pedido.total}"></td>
+                        <td><a th:href="@{../../../detalheDoPedido/{id}(id = ${pedido.id})}">detalhes</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+       
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2022 Dionisio</p>
+        </footer>
+    </body>
+
+</html>
+</html>

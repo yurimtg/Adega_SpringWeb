@@ -112,9 +112,9 @@ public class CarrinhoController {
     }
 
     @GetMapping("carrinho/limparCarrinho")
-    public RedirectView limparCarrinho() {
+    public ModelAndView limparCarrinho() {
         carrinhoDeslogado.clear();
-        return new RedirectView("/home");
+        return new ModelAndView("redirect:" + "http://localhost:8080/home");
     }
 
     @GetMapping("carrinho/dropItem/{id}")

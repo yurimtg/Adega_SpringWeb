@@ -7,6 +7,7 @@
             var valor = document.getElementsByClassName("valor");
             var qtd = document.getElementsByClassName("qtd");
             var total = document.getElementById("total");
+            var link = document.getElementById("linkCheckout");
             var aux = 0;
             for (i = 0; i < valor.length; i++) {
                 if (parseFloat(qtd[i].value) <= 0) {
@@ -15,6 +16,10 @@
                 aux += (parseFloat(valor[i].innerHTML) * parseFloat(qtd[i].value));
             }
             total.innerHTML = aux.toFixed(2);
+            
+            if(total.innerHTML < 0.1){
+                link.href= "#";
+            }
         };
 
 
@@ -23,6 +28,8 @@
             let qtd = element.value;
             window.location.href = "../../../../adicionar/carrinho/" + id + "/" + qtd + "/att";
         }
+        
+
     </script>
     <body>
         <header th:replace="~{fragment :: header}"></header> 
@@ -111,7 +118,7 @@
                                 <h4 class="text-right">SubTotal <label id='total'></label></h4>
                             </div>
                             <div class="col-xs-3">
-                                <a type="button" href="../../../cliente/checkout" class="btn btn-success btn-block">
+                                <a type="button" id="linkCheckout" href="../../../cliente/checkout" class="btn btn-success btn-block">
                                     Checkout
                                 </a>
                             </div>

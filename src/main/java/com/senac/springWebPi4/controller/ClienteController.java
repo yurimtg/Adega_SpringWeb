@@ -4,11 +4,14 @@ import com.senac.springWebPi4.Utils.Status;
 import com.senac.springWebPi4.Utils.UltisUF;
 import com.senac.springWebPi4.model.Cliente;
 import com.senac.springWebPi4.model.EnderecoEntrega;
+import com.senac.springWebPi4.model.Pedido;
 import com.senac.springWebPi4.model.Role;
 import com.senac.springWebPi4.repository.ClienteRepository;
 import com.senac.springWebPi4.repository.EnderecoEntregaRepository;
+import com.senac.springWebPi4.repository.PedidoRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,10 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-public class ClienteController {
+public class ClienteController{
 
     @Autowired
     private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
     @Autowired
     private EnderecoEntregaRepository enderecoRepository;
@@ -219,6 +225,45 @@ public class ClienteController {
 
         ModelAndView mv = new ModelAndView("cliente/enderecosEntrega");
         mv.addObject("enderecos", cliente.getEnderecos());
+
+        return mv;
+    }
+    
+    @GetMapping("cliente/pedido")
+    public ModelAndView pedidoCli(){
+        ModelAndView mv = new ModelAndView("cliente/pedido");
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Cliente cliente = (Cliente) authentication.getPrincipal();
+        
+        List<Pedido> pedido = pedidoRepository.findByCli(cliente.getId());
+        
+        mv.addObject("pedido", pedido);
+        
+        return mv;
+    }
+
+    @GetMapping("detalheDoPedido/{id}")
+    public ModelAndView detalhePedido(@PathVariable("id") Long id) {    
+        
+        String [] status = {"aguardando pagamento","pagamento rejeitado","pagamento com sucesso","aguardando retirada","em transito", "entregue"};
+        
+        ModelAndView mv = new ModelAndView("cliente/detalhePedido");
+
+        Optional<Pedido> pedido = pedidoRepository.findById(id);
+        
+        for (int i = 0; i < status.length; i++) {
+            String aux;
+            if(pedido.get().getStatusPedido().equals(status[i])){
+             aux = status[0];
+             status[0] = status[i];
+             status[i] = aux;
+         
+            }
+        }
+
+        mv.addObject("pedido",pedido.get());
+        mv.addObject("status",status);
 
         return mv;
     }

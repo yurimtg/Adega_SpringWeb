@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class EnderecoEntrega {
@@ -24,10 +25,14 @@ public class EnderecoEntrega {
     private String UF;
     private String CEP;
     private boolean isEntrega;
+    private boolean isAtivo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @OneToMany(mappedBy = "enderecoEntrega")
+    List<Pedido> pedidos;
 
     public EnderecoEntrega() {
     }
@@ -112,4 +117,20 @@ public class EnderecoEntrega {
         this.CEP = CEP;
     }
 
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public boolean isIsAtivo() {
+        return isAtivo;
+    }
+
+    public void setIsAtivo(boolean isAtivo) {
+        this.isAtivo = isAtivo;
+    }
+   
 }

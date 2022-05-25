@@ -89,10 +89,10 @@
                     </div>
 
                     <form  class="m-4"action="/salvarImagem" method="post" enctype="multipart/form-data">
-                        <label id="lblFile" class="imgAdd"for="file"><img class="imgAdd" src="/imagem/Add.jpg">Adcionar Imagem</label> 
-                        <input class="mb-4" type="file" name="file" id="inputFile" accept="image/png,image/jpeg"/>
-                        <button class="btn btn-primary col-md-2" type="submit">Enviar</button>
+                        <label id="lblFile" class="imgAdd"for="file"><img class="imgAdd" src="/imagem/Add.jpg">Adcionar Imagem</label>
+                        <input class="mb-4 hidden" type="file" name="file" id="inputFile" accept="image/png,image/jpeg"/>
                         <input type="text" th:value="${prod.id}" name="id" class="hidden">
+                        <button class="btn btn-primary col-md-3" type="submit">Enviar</button>        
                     </form>
                     <a class="btn-primary btnVoltar" href="javascript:history.back()">VOLTAR</a>
                 </div>

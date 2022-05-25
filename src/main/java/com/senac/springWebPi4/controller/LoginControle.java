@@ -35,8 +35,10 @@ public class LoginControle {
     public RedirectView logado() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Cliente cliente = (Cliente) authentication.getPrincipal();
-
+        try {
+             Cliente cliente = (Cliente) authentication.getPrincipal();
+        
+  
         List<Produto> prod = CarrinhoController.carrinhoDeslogado;
         List<Carrinho> carrinho = carrinhoRepository.findByCli(cliente.getId());
 
@@ -63,8 +65,11 @@ public class LoginControle {
             }
               
         }
-
-        return new RedirectView("carrinho/limparCarrinho");
+            
+        } catch (Exception e) {
+            return new RedirectView("home");
+        }
+       return new RedirectView("carrinho/limparCarrinho");
     }
 
     @RequestMapping("/logout")

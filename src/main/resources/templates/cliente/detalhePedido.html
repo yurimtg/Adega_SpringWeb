@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    </head>
+
+    <body>
+        <main style="display: flex; justify-content: center;">
+            <div class="col-md-6">
+
+                <div class="panel panel-primary" >
+                    <div class="panel-heading text-center">Detalhe do Pedido<span th:text="' #'+${pedido.id}"></span></div>
+                    <br>
+                    <div class="panel panel-default" style="margin-left: 5px; margin-right: 5px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Endereço de entrega: </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <label th:text="${pedido.enderecoEntrega.logradouro}+','"></label>
+                                <label th:text="${pedido.enderecoEntrega.numero}"></label><br>
+                                <label th:text="${pedido.enderecoEntrega.cidade+','}"></label>
+                                <label th:text="${pedido.enderecoEntrega.UF}"></label>
+                                <label th:text="${pedido.enderecoEntrega.CEP}"></label><br>                             
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-default" style="margin-left: 5px; margin-right: 5px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Produtos: </h3>
+                        </div>
+                        <div class="panel-body">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed" th:each='item:${pedido.itemPedido}'>
+                                <div>
+                                    <h6 class="my-0" th:text='${item.ItemProduto.nomeProduto}'>Nome do produto</h6>
+                                    <small class="text-muted" th:text="${item.quantidade}+'x'"></small>
+                                    <small class="text-muted" th:text="'R$'+${item.valor}"></small>
+
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0 text-danger" >-Taxa de entrega R$<span class="text-danger"  th:text="${pedido.taxa}"></span></h6>
+
+                                </div>
+                            </li>
+                        </div>
+                        <div class="panel-footer panel-success">Total: R$<span th:text='${pedido.total}'></span></div>
+                    </div>
+
+
+                    <div class="panel panel-default" style="margin-left: 5px; margin-right: 5px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Forma de Pagamento:</h3>
+                        </div>
+                        <div class="panel-body">
+                            <span th:text='${pedido.pagamento}'></span>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" style="margin-left: 5px; margin-right: 5px;" sec:authorize="hasRole('ROLE_ADMIN')or hasRole('ROLE_ESTOQUE')">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Status</h3>
+                        </div>
+                        <form action="/statusPedido" method="post">
+                            <div class="panel-body">
+                                
+                                <select class="form-control col-md-9" name="statusPedido">
+                                    <option th:each="status: ${status}"
+                                            th:value="${status}"th:text="${status}"></option>
+                                </select>
+                                <input type="hidden" th:value="${pedido.id}" name="id">
+                                <button type="submit" class="col-md-2 ml-4 btn btn-success">salvar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="panel panel-default" style="margin-left: 5px; margin-right: 5px;">
+                        <div class="panel-body">
+                            <a class="btn btn-success col-md-12" href="../../../../user/pedido" sec:authorize="hasRole('ROLE_ADMIN')or hasRole('ROLE_ESTOQUE')">Voltar</a>
+                            <a class="btn btn-success col-md-12" href="../../../../cliente/pedido" sec:authorize="hasRole('ROLE_CLIENTE')">Voltar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+    </body>
+
+</html>

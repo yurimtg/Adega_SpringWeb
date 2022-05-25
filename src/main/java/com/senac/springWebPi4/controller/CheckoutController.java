@@ -58,18 +58,22 @@ public class CheckoutController {
     @PostMapping("confirmarCompra")
     public ModelAndView comfirmarCompra(String pagamento, double taxa) {    
         
-        ModelAndView mv = new ModelAndView("carrinho/detalhePedido");
+        ModelAndView mv = new ModelAndView("carrinho/pedidoResumoCheckout");
         Pedido pedido = new Pedido();
         
         
         double subTotal = 0;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Cliente cli = (Cliente) authentication.getPrincipal();
         
+        EnderecoEntrega endereco = enderecoRepository.findByIsEntregas(cli.getId());
+        
         List<Carrinho> carrinho = carrinhoRepository.findByCli(cli.getId());
+        
         for (Carrinho item : carrinho) {
             subTotal += item.getTotal();          
         }
@@ -81,6 +85,7 @@ public class CheckoutController {
         pedido.setSubTotal(subTotal);
         pedido.setTaxa(taxa);
         pedido.setTotal(subTotal+taxa);
+        pedido.setEnderecoEntrega(endereco);
         
         pedidoRepository.save(pedido);
         
@@ -98,6 +103,33 @@ public class CheckoutController {
         }
         
         mv.addObject("pedido",pedido);
+        return mv;
+    }
+    
+    
+     @PostMapping("dadosCompra")
+    public ModelAndView dadosCompra(String pagamento, double taxa) {    
+        
+        double total= 0;
+        
+        ModelAndView mv = new ModelAndView("carrinho/dadosCompra");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Cliente cli = (Cliente) authentication.getPrincipal();
+
+        EnderecoEntrega endereco = enderecoRepository.findByIsEntregas(cli.getId());
+        List<Carrinho> carrinho = carrinhoRepository.findByCli(cli.getId());
+        
+         for (Carrinho item : carrinho) {
+             total += item.getTotal();
+         }
+         total += taxa;
+         
+        mv.addObject("endereco", endereco);
+        mv.addObject("carrinho", carrinho);
+        mv.addObject("taxa", taxa);
+        mv.addObject("pagamento", pagamento);
+        mv.addObject("total", total);
+       
         return mv;
     }
 }

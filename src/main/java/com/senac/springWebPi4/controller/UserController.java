@@ -2,8 +2,11 @@ package com.senac.springWebPi4.controller;
 
 import com.senac.springWebPi4.Utils.Status;
 import com.senac.springWebPi4.Utils.UtilsTipoUsuario;
+import com.senac.springWebPi4.model.Cliente;
+import com.senac.springWebPi4.model.Pedido;
 import com.senac.springWebPi4.model.Role;
 import com.senac.springWebPi4.model.Usuario;
+import com.senac.springWebPi4.repository.PedidoRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.senac.springWebPi4.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Optional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +31,8 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
     @PostMapping("/criarUsuario")
     public RedirectView createUser(Usuario Usuario) {
@@ -116,5 +123,26 @@ public class UserController {
             user.setStatus(Status.ATIVO.toString());
         }
         userRepository.save(user);
+    }
+
+    @GetMapping("user/pedido")
+    public ModelAndView pedidos() {
+        ModelAndView mv = new ModelAndView("cliente/pedido");
+
+        List<Pedido> pedido = (List<Pedido>) pedidoRepository.findAll();
+
+        mv.addObject("pedido", pedido);
+
+        return mv;
+    }
+
+    @PostMapping("statusPedido")
+    public ModelAndView mudarStatus(Pedido pedido) {
+        ModelAndView mv = new ModelAndView("redirect:" + "http://localhost:8080/detalheDoPedido/"+pedido.getId());
+        Optional<Pedido> p = pedidoRepository.findById(pedido.getId());
+        p.get().setStatusPedido(pedido.getStatusPedido());
+        pedidoRepository.save(p.get());
+
+        return mv;
     }
 }

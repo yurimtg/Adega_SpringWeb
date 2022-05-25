@@ -1,6 +1,5 @@
 package com.senac.springWebPi4.model;
 
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.xml.crypto.Data;
 
 @Entity
 public class Pedido {
@@ -24,6 +22,11 @@ public class Pedido {
     private double taxa;
     private double subTotal;
     private double total;
+
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "endereco_id")
+    private EnderecoEntrega enderecoEntrega;
 
     @OneToMany(mappedBy = "pedido")
     List<ItemPedido> itemPedido;
@@ -106,5 +109,14 @@ public class Pedido {
     public void setTotal(double total) {
         this.total = total;
     }
+    
+    public EnderecoEntrega getEnderecoEntrega() {
+        return enderecoEntrega;
+    }
 
+    public void setEnderecoEntrega(EnderecoEntrega enderecoEntrega) {
+        this.enderecoEntrega = enderecoEntrega;
+    }
+
+    
 }

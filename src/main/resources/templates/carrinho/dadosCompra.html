@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    </head>
+
+    <body>
+        <main style="display: flex; justify-content: center;">
+            <div class="col-md-6">
+                <form action="/confirmarCompra" method="post" enctype="multipart/form-data">
+                    <div class="panel panel-primary" >
+                        <div class="panel-heading">Resumo do Pedido</div>
+                        <br>
+                        <div class="panel panel-default" style="margin-left: 5px; margin-right: 5px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Endereço de entrega: </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div th:if="${endereco} != null">
+                                    <label th:text="${endereco.logradouro}+','"></label>
+                                    <label th:text="${endereco.numero}"></label><br>
+                                    <label th:text="${endereco.cidade+','}"></label>
+                                    <label th:text="${endereco.UF}"></label>
+                                    <label th:text="${endereco.CEP}"></label><br>                             
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="panel panel-default" style="margin-left: 5px; margin-right: 5px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Produtos: </h3>
+                            </div>
+                            <div class="panel-body">
+                                <li class="list-group-item d-flex justify-content-between lh-condensed" th:if='${carrinho}!= null' th:each='item:${carrinho}'>
+                                    <div>
+                                        <h6 class="my-0" th:text='${item.prod.nomeProduto}'>Nome do produto</h6>
+                                        <small class="text-muted" th:text="${item.qtd}+'x'"></small>
+                                        <small class="text-muted" th:text="'R$'+${item.preco}"></small>
+
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0 text-danger" >-Taxa de entrega R$<span class="text-danger"  th:text="${taxa}"></span></h6>
+
+                                    </div>
+                                </li>
+                            </div>
+                            <div class="panel-footer panel-success">Total: R$<span th:text='${total}'></span></div>
+                        </div>
+
+
+                        <div class="panel panel-default" style="margin-left: 5px; margin-right: 5px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Forma de Pagamento: </h3>
+                            </div>
+                            <div class="panel-body">
+                                <span th:text='${pagamento}'></span>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default" style="margin-left: 5px; margin-right: 5px;">
+                            <div class="panel-body">
+                                <a class="btn btn-danger" href="javascript:history.back()" style="margin-right: 3%; width: 48%">Cancelar</a>
+                                <button type="submit" class="btn btn-success" style="width: 48%">Finalizar Compra</button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" th:value='${pagamento}' name="pagamento">
+                    <input type="hidden" th:value='${taxa}' name="taxa">
+                </form>
+            </div>
+        </main>
+
+
+    </body>
+
+</html>

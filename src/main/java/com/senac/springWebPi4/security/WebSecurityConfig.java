@@ -51,6 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 
                 .antMatchers(HttpMethod.GET, "/cliente/dados").hasRole("CLIENTE")
                 .antMatchers(HttpMethod.GET, "/cliente/checkout").hasRole("CLIENTE")
+                .antMatchers(HttpMethod.GET, "/detalheDoPedido/{id}").hasAnyRole("CLIENTE","ESTOQUE")
+                
 
                 .anyRequest().authenticated()
                 .and().formLogin()
