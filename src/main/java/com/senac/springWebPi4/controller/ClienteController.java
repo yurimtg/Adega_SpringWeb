@@ -54,15 +54,11 @@ public class ClienteController{
                 mv.addObject("erroCPF", true);
                 return mv;
             }
-//            ClienteService cliService = new ClienteService();
-//            
-//            if (cliService.valida(cliente.getCPF())) {
-//                mv.addObject("erroInvalido", true);
-//                return mv;
-//            }
+
 
         }
         mv.setViewName("login");
+        
         role.setNomeRole("ROLE_CLIENTE");
         List<Role> rol = new ArrayList();
         rol.add(role);

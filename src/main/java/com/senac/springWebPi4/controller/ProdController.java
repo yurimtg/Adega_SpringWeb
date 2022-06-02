@@ -114,12 +114,14 @@ public class ProdController {
     public RedirectView salvarImagem(long id, @RequestParam("file") MultipartFile arquivo) {
 
         Imagem img = new Imagem(caminhoImg, id);
+        Optional<Produto> prod = produtoRepository.findById(id);
         try {
             if (!arquivo.isEmpty()) {
                 byte[] bytes = arquivo.getBytes();
                 Path caminho = Paths.get(caminhoImg + String.valueOf(img.getFk_prodId()) + arquivo.getOriginalFilename());
                 Files.write(caminho, bytes);
                 img.setImg(String.valueOf(img.getFk_prodId()) + arquivo.getOriginalFilename());
+                img.setProduto(prod.get());
                 imagemRepository.save(img);
             }
 
