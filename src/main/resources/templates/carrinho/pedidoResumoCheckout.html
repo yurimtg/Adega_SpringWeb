@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+
+    <body class="bg-light">
+
+        <header th:replace="~{fragment :: header}"></header> 
+
+        <div class="container">
+            <div class="py-5 text-center">
+
+                <h2>Pedido realizado com Suscesso</h2>
+
+            </div>
+
+
+                    <div class="col-md-12 order-md-1">
+                        <hr class="mb-4">
+                        <div>
+                            <h3 th:text="'Numero do pedido: #'+${pedido.id}"></h3><br>
+                            <label th:text="'Data: '+${pedido.data}"></label><br>
+                            <label th:text="'Status do Pedido: '+${pedido.statusPedido}"></label><br>
+                            <label th:text="'Forma de pagamento: '+${pedido.pagamento}"></label><br>
+                            <label th:text="'Total:'+${pedido.total}"></label>
+ 
+                            <a class="btn btn-primary btn-sm btn-block mt-3"  href="../../home">Home</a>
+
+                        </div>                   
+                    </div>
+                </div>
+    
+            <footer class="my-5 pt-5 text-muted text-center text-small">
+                <p class="mb-1">&copy; 2022 Dionisio</p>
+            </footer>
+    </body>
+
+</html>
+</html>

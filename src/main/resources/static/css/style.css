@@ -1,0 +1,108 @@
+section{
+    
+ margin-bottom: 50px;
+ padding-bottom: 50px;   
+}
+
+.Search{
+    margin-left: 50%;
+}
+
+.paginacao{
+    margin-left: 40%;
+}
+
+.lImg{
+   height: 550px;
+}
+.hidden{
+    visibility: hidden;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.imgAdd{
+    width:55%;
+}
+
+.imgAdd img{
+    width:20%;
+}
+
+.carousel-controler{
+    opacity: 50%;
+    color: black;
+    font-size: 30px;
+}
+
+.cardHome{ 
+    margin:2% 1% 0 1%;
+    width: 31%;
+    height: 450px;
+    padding-bottom: 50px;
+}
+
+.homeImg{
+   height: 200px;
+   width: 60%;
+}
+
+.carousel-item{
+    text-align: center;
+    padding: 5px;
+}
+body{text-align: center; 
+}
+
+.estrelas input[type=radio] {
+  display: none;
+}
+.estrelas label i.fa{
+  font-size:1.0em
+}
+.estrelas label i.fa:before {
+  content:'\f005';
+  color: #FC0;
+}
+.estrelas input[type=radio]:checked ~ label i.fa:before {
+  color: #CCC;
+}
+
+.btnVoltar{
+    text-align: center;
+    text-decoration: none;
+}
+
+
+.homeCard-title{
+  max-width: 35ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+#carouselExampleIndicators .carousel-caption {
+    top: 10%;
+}
+
+.btn-comprar{
+    padding: 10px;
+}
+
+.btn-estilo{
+    padding: 10px;
+}
+
+#credit{
+    display: none;
+}
+
+#boleto{
+    display: none;
+}

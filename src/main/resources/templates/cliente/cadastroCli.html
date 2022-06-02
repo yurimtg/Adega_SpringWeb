@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+    <script type="text/javascript" src="/js/jsCEP.js"></script>
+    <body>
+        <header th:replace="~{fragment :: header}"></header> 
+        <section class="container">
+            <main >
+                <form action="/cadastroCliente" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label>Nome Completo</label>
+                            <input type="text" minlength="3" name="nome" th:value="${cliente.nome}" class="form-control" placeholder="Nome Completo">
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label>Email</label><br>
+                            <label th:if="${erroEmail}" style="color: red;">E-mail ja cadastrado na base de dados</label>                           
+                            <input type="email"  name="email" th:value="${cliente.email}" class="form-control" placeholder="Email" required>
+                        </div>
+                         <div class="col-md-12 mb-3">
+                            <label>Telefone</label>
+                            <input type="tel"  name="telefone" minlength="11" th:value="${cliente.telefone}" class="form-control" placeholder="telefone" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Data de Nascimento</label>
+                            <div class="input-group">
+                                <input type="date"  class="form-control" th:value="${cliente.dataNascimento}" name="dataNascimento" placeholder="Data" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Genero</label>
+                            <select class="form-control col-md-12" name="genero">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>   
+                        <div class="col-md-12 mb-3">
+                            <label>CPF</label><br>
+                             <label th:if="${erroCPF}" style="color: red;">CPF ja Cadastrado na base de dados</label>  
+                             <label th:if="${erroInvalido}" style="color: red;">CPF invalido</label>  
+                             <input type="text"  minlength="10" maxlength="11" th:value="${cliente.CPF}"   name="CPF" class="form-control" placeholder="CPF" required>
+                        </div> 
+                        <h3>
+                            Endereço de cobrança
+                        </h3>
+                        <div class="col-md-3 mb-3">
+                            <label>CEP</label>
+                            <input type="text" th:value="${cliente.CEP}"  name="CEP" class="form-control" id="cep" value="" size="10" maxlength="9"
+                                   onblur="pesquisacep(this.value);"  placeholder="CEP">
+                        </div> 
+                        <div class="col-md-9 mb-3">
+                            <label>Logradouro</label>
+                            <input type="text" th:value="${cliente.logradouro}"  name="logradouro" class="form-control" id="rua" placeholder="Rua" required>
+                        </div> 
+
+                        <div class="col-md-6 mb-3">
+                            <label>Bairro</label>
+                            <input type="text" name="bairro" th:value="${cliente.bairro}"  class="form-control" id="bairro" placeholder="Bairro" required>
+                        </div> 
+                        <div class="col-md-4 mb-3">
+                            <label>Cidade</label>
+                            <input type="text" name="cidade" th:value="${cliente.cidade}"  class="form-control" id="cidade" placeholder="Cidade" required>
+                        </div> 
+                        <div class="col-md-2 mb-3">
+                            <label>UF</label>
+                            <input type="text" class="form-control" th:value="${cliente.UF}"  name="UF" id="uf" placeholder="UF" required>
+                        </div>
+                        <div class="col-md-9 mb-3">
+                            <label>Complemento</label>
+                            <input type="text"  name="complemento" th:value="${cliente.complemento}" class="form-control" placeholder="Complemento">
+                        </div> 
+                        <div class="col-md-3 mb-3">
+                            <label>Nº</label>
+                            <input type="number"  name="numero" th:value="${cliente.numero}"  class="form-control" placeholder="Nº" required>
+                        </div> 
+                        <div class="col-md-12 mb-3">
+                            <label>Senha</label>
+                            <input type="password"  name="senha" class="form-control" placeholder="Senha" required>
+                        </div>  
+                        <div class="col-md-12 mb-3">
+                            <input type="checkbox" name="chkEndereco" th:checked="${flag} ? 'checked' : ''">
+                            <label>Deseja que o endereço de entrega seja o mesmo de cobrança</label>
+
+                        </div> 
+                    </div>
+                    <div class="col-md-12" style="text-align: center">
+                        <button class="btn btn-dark col-md-12 mt-3" type="submit">Cadastrar</button>
+                    </div>
+                </form>
+            </main>
+            </<select>   
+
+                </body>
+                </html>

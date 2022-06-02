@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+    <body>
+        
+            <header th:replace="~{fragment :: header}"></header> 
+            <section class="container">
+            <main >
+                <form action="/criarProduto" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label>Nome Produto</label>
+                            <input type="text" th:value="${prod.nomeProduto}" name="nomeProduto" class="form-control" placeholder="Nome Produto" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label>Descrição</label>
+                            <div class="input-group">
+                                <input type="text" th:value="${prod.descricao}" class="form-control" name="descricao" placeholder="Descrição" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label>Quantidade</label>
+                            <input type="number" th:value="${prod.qtd}" name="qtd" class="form-control" placeholder="Quantidade" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label>Valor</label>
+                            <input type="number" th:value="${prod.valor}" step="0.01" name="valor" class="form-control" placeholder="Valor" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label>Status</label>
+                            <select class="form-control col-md-12" name="status">
+                                <option th:each="status: ${status}"
+                                        th:value="${status}"th:text="${status}"></option>
+                            </select>
+                        </div>    
+                        <div class="col-md-12 mb-3">
+                            <label>Categoria</label>
+                            <select class="form-control col-md-12" name="categoria">
+                                <option th:each="categoria: ${categoria}"
+                                        th:value="${categoria}"th:text="${categoria}"></option>
+                            </select>
+                        </div>  
+                    </div>
+                    <div class="col-md-12" style="text-align: center">
+                        <button class="btn btn-dark col-md-12 mt-3" type="submit">Cadastrar</button>
+                    </div>
+                    <input type="number" class="hidden" th:value="${prod.id}" name="id" required> 
+                </form>
+            </main>
+            </<select>                                   
+                </body>
+                </html>

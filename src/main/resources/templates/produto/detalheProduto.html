@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+    <head th:replace="~{fragment :: head('Product Form')}"></head>
+    <script>
+        window.onload = function () {
+
+            var lblFile = document.getElementById("lblFile");
+            var input = document.getElementById("inputFile");
+
+            lblFile.addEventListener("click", function () {
+                input.click();
+            });
+            input.addEventListener("change", function () {
+                var nome = "Adicionar Imagem";
+                if (input.files.length > 0)
+                    nome = input.files[0].name;
+                lblFile.innerHTML = "<img class='imgAdd' src='/imagem/Add.jpg'>" + nome;
+            });
+
+            let max = document.getElementById("maxV").value;
+
+            for (var i = 0; i < max; i++) {
+                if (i === 0) {
+                    let firstButton = document.createElement('button');
+                    firstButton.setAttribute('type', 'button');
+                    firstButton.setAttribute("data-bs-target", "#carouselExampleCaptions");
+                    firstButton.setAttribute("data-bs-slide-to", "0");
+                    firstButton.setAttribute("class", "active");
+                    firstButton.setAttribute("aria-current", "true");
+                    firstButton.setAttribute("aria-label", "Slide 1");
+                    document.getElementById("t").appendChild(firstButton);
+                } else {
+                    let button = document.createElement('button');
+                    button.setAttribute('type', 'button');
+                    button.setAttribute("data-bs-target", "#carouselExampleCaptions");
+                    if (i === max) {
+                        button.setAttribute("data-bs-slide-to", i);
+                        button.setAttribute("aria-label", "Slide 0");
+                    } else {
+                        button.setAttribute("data-bs-slide-to", i);
+                        button.setAttribute("aria-label", "Slide " + (i + 1));
+                    }
+
+                    document.getElementById("t").appendChild(button);
+                }
+
+            }
+        };
+    </script>
+    <body> 
+        <header th:replace="~{fragment :: header}"></header> 
+        <section>   
+            <div class="card-group mt-3 mb-4">
+
+                <div class="card border-light">
+
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <div id="t">
+                            </div>
+                        </div>
+                        <div class="carousel-inner">
+                            <div th:each = "img,iterStat :${imagem}" th:classappend="${iterStat.first}? 'active'" class="carousel-item">
+                                <img th:src="@{/imagem/{imagem}(imagem = ${img.img})}" class="d-block w-100 lImg" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span aria-hidden="true"></span>
+                            <span class="carousel-controler"><</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span aria-hidden="true"></span>
+                            <span class="carousel-controler">></span>
+                        </button>
+                    </div>
+                    <!--                    <img class="card-img-top mt-5" th:src="@{/imagem/{imagem}(imagem = ${prod.imagem})}"/>         -->
+                </div>
+
+                <div class="card border-light">                  
+                    <div class="card-body">                
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"> <h4 th:text="${prod.nomeProduto}">Card title</h4></li>
+                            <li class="list-group-item" th:text="${prod.descricao}"></li>
+                            <li class="list-group-item" th:text="'Valor: R$ ' + ${prod.valor}"></li>
+                            <li class="list-group-item" th:text="'Categoria: '+${prod.categoria}"></li>
+                            <li class="list-group-item" th:text="'Estatus: '+${prod.status}"></li>
+                            <li class="list-group-item" th:text="'Estoque: '+${prod.qtd}"></li>
+                        </ul>
+                    </div>
+
+                    <form  class="m-4"action="/salvarImagem" method="post" enctype="multipart/form-data">
+                        <label id="lblFile" class="imgAdd"for="file"><img class="imgAdd" src="/imagem/Add.jpg">Adcionar Imagem</label>
+                        <input class="mb-4 hidden" type="file" name="file" id="inputFile" accept="image/png,image/jpeg"/>
+                        <input type="text" th:value="${prod.id}" name="id" class="hidden">
+                        <button class="btn btn-primary col-md-3" type="submit">Enviar</button>        
+                    </form>
+                    <a class="btn-primary btnVoltar" href="javascript:history.back()">VOLTAR</a>
+                </div>
+            </div>
+        </section>
+        <input id="maxV" type="type" name="name" class="hidden" th:value='${tamanho}'>
+    </body>
+</html>
